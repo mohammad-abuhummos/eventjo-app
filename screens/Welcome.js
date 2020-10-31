@@ -5,43 +5,49 @@ import { LinearGradient } from "expo-linear-gradient";
 import AppInput from "../components/AppInput";
 import AppButton from "../components/AppButton";
 import { Button } from "react-native-elements";
-import { AsyncStorage } from "AsyncStorage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const singin = (userinfo) => {
-  return axios
-    .post(`https://immense-dusk-78248.herokuapp.com/api/auth/login`, userinfo)
-    .then(({ data }) => {
-      setUserToken(data["token"]);
-      console.log(data);
-    });
+export const singin = async (userinfo) => {
+  try {
+    const resp = await axios.post(
+      `https://immense-dusk-78248.herokuapp.com/api/auth/login`,
+      userinfo
+    );
+    setUserToken(resp.data["access_token"]);
+    console.log();
+  } catch (err) {
+    // Handle Error Here
+    console.error(err);
+  }
 };
 
-export function getUserToken() {
-  return AsyncStorage.getItem("UserToken");
-}
+export const getUserToken = async () => {
+  try {
+    const hi = await AsyncStorage.getItem("UserToken");
+    console.log(hi);
+  } catch (e) {
+    console.log(e);
+  }
+};
+getUserToken();
+export const setUserToken = async (token) => {
+  try {
+    await AsyncStorage.setItem("UserToken", token);
+  } catch (e) {
+    console.log(e);
+  }
+};
 
-export function setUserToken(token) {
-  AsyncStorage.setItem("UserToken", token);
-}
-
-export default function Welcome() {
+export default function Welcome({ navigation }) {
   const [email, setEmaile] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const handleClick = async () => {
-    try {
-      if (!!email && !!password) {
-        await singin({
-          email: email,
-          password: password,
-        });
-      }
-    } catch (error) {
-      console.log(error);
+  const handleClick = () => {
+    if (!!email && !!password) {
+      singin({
+        email: email,
+        password: password,
+      }).then(navigation.navigate("Home"));
     }
-    console.log({
-      email: email,
-      password: password,
-    });
   };
 
   return (
