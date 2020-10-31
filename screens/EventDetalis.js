@@ -12,13 +12,13 @@ export default function EventDetalis() {
             <ScrollView style={styles.scrollView}>
                 <View style={styles.header}>
                     <View style={styles.arrowBack}>
-                        <Ionicons name="ios-arrow-back" size={25} color="black" style={styles.backIcon} onPress={() => navigation.navigate("DrawerOpen")} />
+                        <Ionicons name="ios-arrow-back" size={25}  style={styles.backIcon} onPress={() => navigation.navigate("DrawerOpen")} />
                     </View>
                     <View style={styles.camera}>
-                        <AntDesign name="camera" size={25} color="rgba(52, 52, 52, 0.2)" style={{ marginLeft: 230, marginTop: 4 }} />
+                        <AntDesign name="camera" size={27} color="#BABABA" style={{ marginLeft: 230, marginTop: 4 }} />
                     </View>
                     <View style={styles.heart}>
-                        <AntDesign name="heart" size={25} color="rgba(52, 52, 52, 0.2)" style={styles.heartIcon} />
+                        <AntDesign name="heart" size={25} color="#BABABA" style={styles.heartIcon} />
                     </View>
                 </View>
                 <View style={styles.imgBox} >
@@ -53,19 +53,19 @@ export default function EventDetalis() {
                         <Text style={styles.txtTitle, { fontWeight: 'bold', fontSize: 30 }}>التفاصيل</Text>
                     </View>
                     <View style={styles.DateBox}>
-                        <Text style={{ alignSelf: 'center', paddingRight: 20, fontWeight: 'bold', fontSize: 20, color: 'rgba(52, 52, 52, 0.2)' }}>2020/1/2</Text>
-                        <AntDesign name="calendar" size={30} color="black" color="rgba(52, 52, 52, 0.2)" />
+                        <Text style={{ alignSelf: 'center', paddingRight: 20, fontWeight: 'bold', fontSize: 20, color: '#8d8d8d' }}>2020/1/2</Text>
+                        <AntDesign name="calendar" size={30} color="black" color="#8d8d8d" />
                     </View>
                     <View style={styles.locationBox}>
-                        <Text style={{ alignSelf: 'center', paddingRight: 20, fontWeight: 'bold', fontSize: 20, color: 'rgba(52, 52, 52, 0.2)' }}>عمان المدينة الرياضية</Text>
-                        <Entypo name="location-pin" size={40} color="black" color="rgba(52, 52, 52, 0.2)" />
+                        <Text style={{ alignSelf: 'center', paddingRight: 20, fontWeight: 'bold', fontSize: 20, color: '#8d8d8d' }}>عمان المدينة الرياضية</Text>
+                        <Entypo name="location-pin" size={40} color="black" color="#8d8d8d" />
                     </View>
                     <View style={styles.aboutBox}>
-                        <Text style={{ alignSelf: 'center', paddingRight: 20, fontWeight: 'bold', fontSize: 20, color: 'rgba(52, 52, 52, 0.2)' }}>تفاصيل الحدث</Text>
-                        <AntDesign name="infocirlce" size={30} color="black" color="rgba(52, 52, 52, 0.2)" />
+                        <Text style={{ alignSelf: 'center', paddingRight: 20, fontWeight: 'bold', fontSize: 20, color: '#8d8d8d' }}>تفاصيل الحدث</Text>
+                        <AntDesign name="infocirlce" size={30} color="black" color="#8d8d8d" />
                     </View>
                     <View style={styles.aboutText}>
-                        <Text style={styles.text, { alignSelf: 'center', paddingRight: 20, fontWeight: 'bold', fontSize: 20, marginTop: 20, color: 'rgba(52, 52, 52, 0.2)', }}>
+                        <Text style={styles.text, { alignSelf: 'center', paddingRight: 20, fontWeight: 'bold', fontSize: 20, marginTop: 20, color: '#8d8d8d', }}>
                             إذا كنت ترغب في إنشاء تطبيق جوال لمشروعك أو لشركتك، فأول سؤال سيتبادر إلى ذهنك هل تقوم ببناء التطبيق لنظام التشغيل أندرويد (Android) أم نظام (iOS)؟ الجواب السهل قد يكون أن تنشئ التطبيق على كلاهما، لتضمن لتطبيقك فرصة أكبر للنجاح والانتشار. لكنّ الحقيقة أنّ إنشاء نسختين من التطبيق؛ إحداهما لأندرويد والأخرى لـ iOS قد يكون مكلفًا من جهة الوقت والمال، لذا يجب عليك أن تختار!
 
                             لماذا يجب أن تختار بين أندرويد و iOS عند إنشاء تطبيق جوال؟
@@ -86,9 +86,7 @@ export default function EventDetalis() {
 }
 
 const styles = StyleSheet.create({
-    text: {
-        fontFamily: 'Cairo-Bold',
-    },
+
     container: {
         flex: 1,
         width: "100%",
@@ -174,7 +172,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     locationBox: {
-        marginRight: -7,
+        marginRight: -5,
         marginTop: 20,
         flexDirection: 'row',
     },
@@ -185,7 +183,7 @@ const styles = StyleSheet.create({
     aboutBox: {
         marginTop: 20,
         flexDirection: 'row',
-        marginRight: -5,
+        marginRight: -1,
     },
     scrollView: {
     },

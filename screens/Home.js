@@ -1,41 +1,71 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Avatar, Button } from 'react-native-elements';
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-export default function SignUp() {
+import EventCard from '../components/EventCard'
+export default function Home() {
     return (
-        <View style={styles.container}>
-            <LinearGradient colors={["#6AF1C5", "#3D7BF7"]} start={{ x: 0.9, y: 0.0 }} style={styles.gradient}>
-                <View style={styles.containerProfile}>
-                    <View style={styles.iconsHeader}>
-                        <View>
-                            <MaterialCommunityIcons name="menu-open" size={50} color="white" style={styles.menuIcon} />
+        <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
+                <LinearGradient colors={["#6AF1C5", "#3D7BF7"]} start={{ x: 0.9, y: 0.0 }} style={styles.gradient}>
+                    <View style={styles.containerProfile}>
+                        <View style={styles.iconsHeader}>
+                            <View>
+                                <MaterialCommunityIcons name="menu-open" size={50} color="white" style={styles.menuIcon} />
+                            </View>
+                            <View>
+                                <FontAwesome name="bell" size={24} color="white" style={styles.bellIcon} />
+                            </View>
                         </View>
-                        <View>
-                            <FontAwesome name="bell" size={24} color="white" style={styles.bellIcon} />
+                        <View style={styles.profileTitle}>
+                            <View style={styles.profilePic}>
+                                <Avatar size={70} rounded source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg', }} style={styles.avatarStyle} />
+                            </View>
+                            <View style={styles.containerName}><Text style={styles.profileName} >Hi  , Evana</Text>
+                                <Text style={styles.profileText} >Another txt</Text></View>
+                        </View>
+                        <View style={styles.searchSection}>
+                            <TextInput style={styles.searchInput} placeholder="بحث" onChangeText={value => this.setState({ comment: value })}
+                            />
+                            <View style={styles.searchIcon}>
+                                <LinearGradient colors={["#6AF1C5", "#3D7BF7"]} start={{ x: 0.9, y: 0.0 }} style={{ borderRadius: 15 }}>
+                                    <MaterialIcons name="search" size={24} color="white" />
+                                </LinearGradient>
+                            </View>
                         </View>
                     </View>
-                    <View style={styles.profileTitle}>
-                        <View style={styles.profilePic}>
-                            <Avatar size={70} rounded source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg', }} style={styles.avatarStyle} />
-                        </View>
-                        <View style={styles.containerName}><Text style={styles.profileName} >Hi  , Evana</Text>
-                            <Text style={styles.profileText} >Another txt</Text></View>
+                </LinearGradient>
+                <View style={styles.popappEventCard}>
+                    <View style={styles.containerText}>
+                        <View><Text style={styles.textShowEvent}>ورشات العمل القادمة</Text></View>
+                        <View><Text style={styles.textShowEvent}>المشاهدات</Text></View>
+
                     </View>
-                    <View style={styles.searchSection}>
-                        <TextInput style={styles.searchInput} placeholder="بحث" onChangeText={value => this.setState({ comment: value })}
-                        />
-                        <View style={styles.searchIcon}>
-                            <LinearGradient colors={["#6AF1C5", "#3D7BF7"]} start={{ x: 0.9, y: 0.0 }} style={{ borderRadius: 15 }}>
-                                <MaterialIcons name="search" size={24} color="white" />
-                            </LinearGradient>
+                    <ScrollView style={styles.scrollView}>
+
+                        <View style={styles.containerCard}>
+                            <EventCard img={require("../assets/new_statesman_events.jpg")} location="Amman" date="2020-2-4" sets="200" />
                         </View>
-                    </View>
+                        <View style={styles.containerCard}>
+                            <EventCard img={require("../assets/new_statesman_events.jpg")} location="Amman" date="2020-2-4" sets="200" />
+                        </View>
+                        <View style={styles.containerCard}>
+                            <EventCard img={require("../assets/new_statesman_events.jpg")} location="Amman" date="2020-2-4" sets="200" />
+                        </View>
+                        <View style={styles.containerCard}>
+                            <EventCard img={require("../assets/new_statesman_events.jpg")} location="Amman" date="2020-2-4" sets="200" />
+                        </View>
+                        <View style={styles.containerCard}>
+                            <EventCard img={require("../assets/new_statesman_events.jpg")} location="Amman" date="2020-2-4" sets="200" />
+                        </View>
+                    </ScrollView>
+
                 </View>
-            </LinearGradient>
-        </View>
+
+            </View>
+        </SafeAreaView>
     );
 }
 
@@ -126,7 +156,38 @@ const styles = StyleSheet.create({
     menuIcon: {
 
     },
+    popappEventCard: {
+        marginTop: -70
+    },
+    containerCard: {
+        backgroundColor: '#FFFFFF',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 5.95,
+        elevation: 18,
+        width: '80%',
+        borderRadius: 10,
+        alignSelf: 'center',
+        marginBottom: 20,
 
-
+    },
+    containerText: {
+        alignSelf: 'center',
+        flexDirection: 'row',
+        alignContent: 'space-between',
+    },
+    textShowEvent: {
+        color: '#FFFFFF',
+        fontSize: 20,
+        paddingHorizontal: 50,
+        paddingVertical: 10,
+    },
+    scrollView:{
+        height:310
+    }
 
 });
