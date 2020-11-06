@@ -12,6 +12,7 @@ import AppInput from "../components/AppInput";
 import { Button } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
+import GradientHeader from "../components/GradientHeader";
 
 export default function SignUp() {
   const [image, setImage] = React.useState(null);
@@ -46,10 +47,8 @@ export default function SignUp() {
   return (
     <View style={styles.container}>
       <View style={styles.gradientContainer}>
-        <LinearGradient
-          colors={["#6AF1C5", "#3D7BF7"]}
-          start={{ x: 0.9, y: 0.0 }}
-          style={styles.gradient}
+        <GradientHeader
+         height={200}
         >
           <View style={styles.header}>
             <Image
@@ -70,7 +69,7 @@ export default function SignUp() {
               />
             </TouchableOpacity>
           </View>
-        </LinearGradient>
+        </GradientHeader>
       </View>
       <View style={{ flex: 0.7, width: "100%", paddingHorizontal: 40 }}>
         <View style={{ paddingTop: 35, width: "100%" }}>
@@ -110,13 +109,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-  },
-  gradient: {
-    width: "100%",
-    minHeight: 200,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
-    padding: 25,
   },
   gradientContainer: {
     flex: 0.35,
