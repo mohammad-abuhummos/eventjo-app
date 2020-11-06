@@ -2,8 +2,8 @@ import React from "react";
 import axios from "axios";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import AppInput from "../components/AppInput";
-import AppButton from "../components/AppButton";
+import AppInput from "../../components/AppInput";
+import AppButton from "../../components/AppButton";
 import { Button } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -38,7 +38,7 @@ export const setUserToken = async (token) => {
   }
 };
 
-export default function Welcome({ navigation }) {
+export default function SignIn({ navigation }) {
   const [email, setEmaile] = React.useState("");
   const [password, setPassword] = React.useState("");
   const handleClick = () => {
