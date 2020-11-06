@@ -4,8 +4,8 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Welcome from "./screens/Welcome";
-import SignUp from "./screens/SignUp";
+import SingIn from "./screens/Auth/SignIn";
+import SignUp from "./screens/Auth/SignUp";
 import Home from "./screens/Home";
 
 export default function App() {
@@ -18,7 +18,7 @@ export default function App() {
         }}
         initialRouteName="Home"
       >
-        <Stack.Screen name="Welcome" component={Welcome} />
+        <Stack.Screen name="SingIn" component={SingIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
