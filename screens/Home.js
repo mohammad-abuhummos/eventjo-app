@@ -16,15 +16,13 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import EventCard from "../components/EventCard";
+import GradientHeader from "../components/GradientHeader";
+
 export default function Home() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
-        <LinearGradient
-          colors={["#6AF1C5", "#3D7BF7"]}
-          start={{ x: 0.9, y: 0.0 }}
-          style={styles.gradient}
-        >
+        <GradientHeader height={300}>
           <View style={styles.containerProfile}>
             <View style={styles.iconsHeader}>
               <View>
@@ -78,7 +76,7 @@ export default function Home() {
               </View>
             </View>
           </View>
-        </LinearGradient>
+        </GradientHeader>
         <View style={styles.popappEventCard}>
           <View style={styles.containerText}>
             <View>
@@ -140,12 +138,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-  },
-  gradient: {
-    width: "100%",
-    minHeight: 300,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
   },
   profilePic: {
     backgroundColor: "white",
