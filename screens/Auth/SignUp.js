@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import AppInput from "../components/AppInput";
+import AppInput from "../../components/AppInput";
 import { Button } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
-import GradientHeader from "../components/GradientHeader";
+import GradientHeader from "../../components/GradientHeader";
 
 export default function SignUp() {
   const [image, setImage] = React.useState(null);
@@ -52,7 +52,7 @@ export default function SignUp() {
         >
           <View style={styles.header}>
             <Image
-              source={require("../assets/back-arrow-icon.png")}
+              source={require("../../assets/back-arrow-icon.png")}
               style={{ width: 42, height: 42 }}
             />
             <Text style={styles.headerText}>SIGN UP</Text>
@@ -63,7 +63,7 @@ export default function SignUp() {
                 source={
                   !!image
                     ? { uri: image }
-                    : require("../assets/add-image-icon.png")
+                    : require("../../assets/add-image-icon.png")
                 }
                 style={{ width: 142, height: 142, borderRadius: 100 }}
               />
