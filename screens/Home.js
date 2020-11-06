@@ -6,6 +6,7 @@ import {
   TextInput,
   SafeAreaView,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Avatar, Button } from "react-native-elements";
@@ -18,21 +19,21 @@ import {
 import EventCard from "../components/EventCard";
 import GradientHeader from "../components/GradientHeader";
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <GradientHeader height={300}>
           <View style={styles.containerProfile}>
             <View style={styles.iconsHeader}>
-              <View>
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
                 <MaterialCommunityIcons
                   name="menu-open"
                   size={50}
                   color="white"
                   style={styles.menuIcon}
                 />
-              </View>
+              </TouchableOpacity>
               <View>
                 <FontAwesome
                   name="bell"
@@ -207,7 +208,7 @@ const styles = StyleSheet.create({
     right: 10,
   },
   bellIcon: {},
-  menuIcon: {},
+  menuIcon: { padding: 10 },
   popappEventCard: {
     marginTop: -70,
   },
