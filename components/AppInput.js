@@ -2,10 +2,10 @@ import React from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 
 export default function AppInput(props) {
-  const { placeholder } = props;
+  const { placeholder, style,keyboardType } = props;
   return (
     <View style={styles.container}>
-      <TextInput placeholder={placeholder} style={styles.input} {...props} />
+      <TextInput placeholder={placeholder} style={styles.input [ style ]} keyboardType={keyboardType} {...props} />
     </View>
   );
 }

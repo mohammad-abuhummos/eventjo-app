@@ -5,7 +5,7 @@ import { Ionicons, Feather } from "@expo/vector-icons";
 import * as Progress from "react-native-progress";
 import GradientHeader from "../components/GradientHeader";
 
-export default function SignUp() {
+export default function Profile() {
   return (
     <View style={styles.container}>
       <GradientHeader
