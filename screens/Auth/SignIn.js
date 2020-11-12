@@ -14,7 +14,7 @@ export const singin = async (userinfo) => {
       userinfo
     );
     setUserToken(resp.data["access_token"]);
-    console.log();
+    console.log(resp);
   } catch (err) {
     // Handle Error Here
     console.error(err);
@@ -24,7 +24,7 @@ export const singin = async (userinfo) => {
 export const getUserToken = async () => {
   try {
     const hi = await AsyncStorage.getItem("UserToken");
-    console.log(hi);
+    console.log('hi',hi);
   } catch (e) {
     console.log(e);
   }
@@ -42,7 +42,7 @@ export default function SignIn({ navigation }) {
   const [email, setEmaile] = React.useState("");
   const [password, setPassword] = React.useState("");
   const handleClick = () => {
-    if (!!email && !!password) {
+    if (!email && !!password) {
       singin({
         email: email,
         password: password,
