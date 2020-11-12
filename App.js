@@ -12,6 +12,8 @@ import {
 import SingIn from "./screens/Auth/SignIn";
 import SignUp from "./screens/Auth/SignUp";
 import Home from "./screens/Home";
+import CreateEvent from "./screens/CreateEvent";
+
 
 const Drawer = createDrawerNavigator();
 function CustomDrawerContentComponent(props) {
@@ -54,11 +56,12 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Home"
+        initialRouteName="CreateEvent"
       >
         <Stack.Screen name="SingIn" component={SingIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Home" component={AppDrawer} />
+        <Stack.Screen name="CreateEvent" component={CreateEvent} />
       </Stack.Navigator>
     </NavigationContainer>
   );
