@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { NavigationContainer, DrawerItems } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -17,30 +17,6 @@ import CreateEvent from "./screens/CreateEvent";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import Axios from "axios";
 import { showCurrentUser } from "./api";
- 
-
-
-// export const getUserToken = async () => {
-//   try {
-//     const UserToken = await AsyncStorage.getItem("UserToken");
-//     console.log(UserToken);
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
-
-// export const singin = async (userinfo) => {
-//   try {
-//     const resp = await axios.get(
-//       `https://immense-dusk-78248.herokuapp.com/api/auth/login`,
-//     );
-//     console.log();
-//   } catch (err) {
-//     // Handle Error Here
-//     console.error(err);
-//   }
-// };
-
 
 
 const Drawer = createDrawerNavigator();
@@ -67,45 +43,36 @@ function CustomDrawerContentComponent(props) {
 function AppDrawer() {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="SingUp"
       drawerContent={(props) => <CustomDrawerContentComponent {...props} />}
     >
       <Drawer.Screen options={{ headerShown: false }} name="Home" component={Home} />
       <Drawer.Screen options={{ headerShown: false }} name="SingIn" component={SingIn} />
+      <Drawer.Screen options={{ headerShown: false }} name="SingUp" component={SignUp} />
     </Drawer.Navigator>
   );
 }
 
 export default function App() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
-  const [guestToken, setGuestToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setisLoading] = useState(true);
-
-console.log("currentUser",currentUser)
-  const fetchUser = async () => {
+  // console.log(currentUser)
+  const fetchToken = async () => {
     try {
-      const token = await AsyncStorage.getItem('UserToken');
-      console.log('got tolke', token);
+      const token = await AsyncStorage.getItem("UserToken");
       if (!!token) {
-        const {data} = await showCurrentUser();
-        console.log('user data', data);
-        await setCurrentUser(data);
+        const data = await showCurrentUser();
+        await setCurrentUser(data["data"]);
         setisAuthenticated(true);
       }
     } catch (error) {
-      console.log('token error', error);
-    }
+      console.log("token error", error);
+    } 
   };
   React.useEffect(() => {
-    fetchUser();
+    fetchToken();
   }, []);
-
-
-
-
-
-
 
   const Stack = createStackNavigator();
   return (
