@@ -12,6 +12,7 @@ import {
 import SingIn from "./screens/Auth/SignIn";
 import SignUp from "./screens/Auth/SignUp";
 import Home from "./screens/Home";
+import Welcome from "./screens/Auth/Welcome";
 import CreateEvent from "./screens/CreateEvent";
 
 
@@ -42,8 +43,8 @@ function AppDrawer() {
       initialRouteName="Home"
       drawerContent={(props) => <CustomDrawerContentComponent {...props} />}
     >
-      <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="SingIn" component={SingIn} />
+      <Drawer.Screen options={{ headerShown: false }} name="Home" component={Home} />
+      <Drawer.Screen options={{ headerShown: false }} name="SingIn" component={SingIn} />
     </Drawer.Navigator>
   );
 }
@@ -58,10 +59,11 @@ export default function App() {
         }}
         initialRouteName="CreateEvent"
       >
-        <Stack.Screen name="SingIn" component={SingIn} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="Home" component={AppDrawer} />
-        <Stack.Screen name="CreateEvent" component={CreateEvent} />
+        <Stack.Screen options={{ headerShown: false }} name="SingIn" component={SingIn} />
+        <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUp} />
+        <Stack.Screen options={{ headerShown: false }} name="Home" component={AppDrawer} />
+        <Stack.Screen options={{ headerShown: false }} name="Welcome" component={Welcome} />
+        <Stack.Screen options={{ headerShown: false }} name="CreateEvent" component={CreateEvent} />
       </Stack.Navigator>
     </NavigationContainer>
   );

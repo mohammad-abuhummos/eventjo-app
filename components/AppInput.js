@@ -5,7 +5,7 @@ export default function AppInput(props) {
   const { placeholder, style,keyboardType } = props;
   return (
     <View style={styles.container}>
-      <TextInput placeholder={placeholder} style={styles.input [ style ]} keyboardType={keyboardType} {...props} />
+      <TextInput placeholder={placeholder} style={[styles.input, style]} keyboardType={keyboardType} {...props} />
     </View>
   );
 }
@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F5F5",
     width: "100%",
     padding: 15,
+    paddingLeft:30,
     borderRadius: 50,
   },
   container: {

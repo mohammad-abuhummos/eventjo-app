@@ -58,13 +58,13 @@ export default function SignIn({ navigation }) {
           start={{ x: 0.9, y: 0.0 }}
           style={styles.gradient}
         >
-          <Text>Event jo app</Text>
-
+          <Text style={styles.nameProject}>EVEN<Text style={styles.extensionNameProject}>TS</Text>JO</Text>
           <View
             style={{
               paddingHorizontal: 40,
               paddingVertical: 20,
               width: "100%",
+              marginTop:100
             }}
           >
             <AppInput
@@ -75,7 +75,7 @@ export default function SignIn({ navigation }) {
           <View
             style={{
               paddingHorizontal: 40,
-              paddingVertical: 20,
+              paddingVertical: 10,
               width: "100%",
             }}
           >
@@ -87,7 +87,7 @@ export default function SignIn({ navigation }) {
           <View
             style={{
               paddingHorizontal: 40,
-              paddingVertical: 20,
+              paddingVertical: 10,
               width: "100%",
             }}
           >
@@ -113,6 +113,7 @@ export default function SignIn({ navigation }) {
               buttonStyle={{ paddingLeft: 5 }}
               title="Sign Up"
               type="clear"
+              onPress={() => navigation.navigate('SignUp')} 
             />
           </View>
         </LinearGradient>
@@ -136,4 +137,14 @@ const styles = StyleSheet.create({
     paddingBottom: 150,
     backgroundColor: "#ffff",
   },
+  nameProject: {
+    color: 'white',
+    fontSize: 50,
+    fontWeight: 'bold',
+
+    // 
+  },
+  extensionNameProject: {
+    color: '#5684A6'
+  }
 });
