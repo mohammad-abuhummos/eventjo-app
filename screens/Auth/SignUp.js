@@ -13,10 +13,40 @@ import { Button } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import GradientHeader from "../../components/GradientHeader";
 import { Ionicons } from '@expo/vector-icons';
+import { setUserToken } from "./SignIn";
+import Axios from "axios";
 
 export default function SignUp() {
   const [image, setImage] = React.useState(null);
+  const [name, setName] = React.useState(null);
+  const [email, setEmail] = React.useState(null);
+  const [password, setPassword] = React.useState(null);
 
+  const SingUpPost = async (userinfo) => {
+    let axiosConfig = {
+      headers:{
+        'Accept': 'application/json',
+        "content-type": "multipart/form-data",
+      },
+    };
+    try {
+      const resp = await Axios.post(
+        `https://immense-dusk-78248.herokuapp.com/api/auth/image-test`, {headers:{
+          'Accept': 'application/json',
+          'content-type': 'multipart/form-data',
+        },userinfo});
+      console.log("resp.data", resp.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  
+
+  
+  const handelClick = () => {
+    SingUpPost(formData);
+  };
+  
   React.useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -29,21 +59,38 @@ export default function SignUp() {
       }
     })();
   }, []);
-
+  
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
+      exif : true,
       aspect: [4, 3],
       quality: 1,
     });
-
-    console.log(result);
+    
     if (!result.cancelled) {
-      setImage(result.uri);
+      setImage(result);
     }
   };
+  const formData = new FormData();
+  if (!!image) {
+    let uriParts = image.uri.split('.');
+    let fileType = uriParts[uriParts.length - 1];
+    console.log("fileType",fileType)
+    formData.append("file", {
+      uri: image.uri, 					// this is the path to your file. see Expo ImagePicker or React Native ImagePicker
+      type: `image`,  // example: image/jpg
+      name: `upload`    // example: upload.jpg
+    });
+  }
 
+  console.log(JSON.stringify(formData));
+  // formData.append("name",name);
+  // formData.append("email", email);
+  // formData.append("password", password);
+ 
+  
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -76,33 +123,43 @@ export default function SignUp() {
             </GradientHeader>
           </View>
           <View style={{ flex: 0.7, width: "100%", paddingHorizontal: 40 }}>
-            <View style={{ paddingTop: 35, width: "100%" }}>
-              <AppInput placeholder="FULL NAME" />
-            </View>
-            <View style={{ paddingTop: 35, width: "100%" }}>
-              <AppInput placeholder="EMAIL ADDRESS" />
-            </View>
-            <View style={{ paddingTop: 35, width: "100%" }}>
-              <AppInput placeholder="PASSWORD" />
-            </View>
-            <View style={{ paddingTop: 35, width: "100%" }}>
-              <AppInput placeholder="RE-TYPE PASSWORD" />
-            </View>
-            <View style={{ paddingTop: 35, width: "100%" }}>
-              <Button
-                titleStyle={{ color: "#fafafa" }}
-                ViewComponent={LinearGradient} // Don't forget this!
-                linearGradientProps={{
-                  colors: ["#3D7BF7", "#6AF1C5"],
-                  start: { x: 0, y: 0.5 },
-                  end: { x: 1, y: 0.5 },
-                }}
-                buttonStyle={{ padding: 13, borderRadius: 25 }}
-                title="Sign Up"
-                type="clear"
-              />
-            </View>
-          </View>
+        <View style={{ paddingTop: 35, width: "100%" }}>
+          <AppInput
+            onChangeText={(text) => setName(text)}
+            placeholder="FULL NAME"
+          />
+        </View>
+        <View style={{ paddingTop: 35, width: "100%" }}>
+          <AppInput
+            onChangeText={(text) => setEmail(text)}
+            placeholder="EMAIL ADDRESS"
+          />
+        </View>
+        <View style={{ paddingTop: 35, width: "100%" }}>
+          <AppInput
+            onChangeText={(text) => setPassword(text)}
+            placeholder="PASSWORD"
+          />
+        </View>
+        <View style={{ paddingTop: 35, width: "100%" }}>
+          <AppInput placeholder="RE-TYPE PASSWORD" />
+        </View>
+        <View style={{ paddingTop: 35, width: "100%" }}>
+          <Button
+            titleStyle={{ color: "#fafafa" }}
+            ViewComponent={LinearGradient} // Don't forget this!
+            linearGradientProps={{
+              colors: ["#3D7BF7", "#6AF1C5"],
+              start: { x: 0, y: 0.5 },
+              end: { x: 1, y: 0.5 },
+            }}
+            buttonStyle={{ padding: 13, borderRadius: 25 }}
+            title="Sign Up"
+            type="clear"
+            onPress={handelClick}
+          />
+        </View>
+      </View>
         </View>
       </ScrollView>
     </SafeAreaView>

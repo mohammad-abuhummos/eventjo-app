@@ -7,32 +7,30 @@ import AppButton from "../../components/AppButton";
 import { Button } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const singin = async (userinfo) => {
+const SingInPost = async (userinfo) => {
   try {
     const resp = await axios.post(
       `https://immense-dusk-78248.herokuapp.com/api/auth/login`,
       userinfo
     );
     setUserToken(resp.data["access_token"]);
-    console.log();
+    console.log(resp);
   } catch (err) {
     // Handle Error Here
     console.error(err);
   }
 };
 
-export const getUserToken = async () => {
+export const setUserToken = async (token) => {
   try {
-    const hi = await AsyncStorage.getItem("UserToken");
-    console.log(hi);
+    await AsyncStorage.setItem("UserToken", token);
   } catch (e) {
     console.log(e);
   }
 };
-getUserToken();
-export const setUserToken = async (token) => {
+export const removeUserToken = async (token) => {
   try {
-    await AsyncStorage.setItem("UserToken", token);
+    await AsyncStorage.removeItem("UserToken");
   } catch (e) {
     console.log(e);
   }
@@ -43,11 +41,16 @@ export default function SignIn({ navigation }) {
   const [password, setPassword] = React.useState("");
   const handleClick = () => {
     if (!!email && !!password) {
-      singin({
+      console.log("click");
+      SingInPost({
         email: email,
         password: password,
       }).then(navigation.navigate("Home"));
     }
+  };
+  const handleClickOut = () => {
+    removeUserToken();
+    console.log("removed");
   };
 
   return (
@@ -96,6 +99,12 @@ export default function SignIn({ navigation }) {
               titleStyle={{ color: "#719CCE" }}
               title="login"
               onPress={handleClick}
+            />
+            <AppButton
+              Style={{ backgroundColor: "#fff" }}
+              titleStyle={{ color: "#719CCE" }}
+              title="logout"
+              onPress={handleClickOut}
             />
           </View>
           <View
