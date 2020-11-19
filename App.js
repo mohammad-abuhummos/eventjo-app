@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, ActivityIndicator } from "react-native";
 import { NavigationContainer, DrawerItems } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
@@ -15,10 +15,8 @@ import Home from "./screens/Home";
 import Welcome from "./screens/Auth/Welcome";
 import CreateEvent from "./screens/CreateEvent";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import Axios from "axios";
 import { showCurrentUser } from "./api";
-
-
+export const AuthContext = React.createContext();
 const Drawer = createDrawerNavigator();
 function CustomDrawerContentComponent(props) {
   return (
@@ -43,12 +41,24 @@ function CustomDrawerContentComponent(props) {
 function AppDrawer() {
   return (
     <Drawer.Navigator
-      initialRouteName="SingUp"
+      initialRouteName="Home"
       drawerContent={(props) => <CustomDrawerContentComponent {...props} />}
     >
-      <Drawer.Screen options={{ headerShown: false }} name="Home" component={Home} />
-      <Drawer.Screen options={{ headerShown: false }} name="SingIn" component={SingIn} />
-      <Drawer.Screen options={{ headerShown: false }} name="SingUp" component={SignUp} />
+      <Drawer.Screen
+        options={{ headerShown: false }}
+        name="Home"
+        component={Home}
+      />
+      <Drawer.Screen
+        options={{ headerShown: false }}
+        name="SingIn"
+        component={SingIn}
+      />
+      <Drawer.Screen
+        options={{ headerShown: false }}
+        name="SingUp"
+        component={SignUp}
+      />
     </Drawer.Navigator>
   );
 }
@@ -57,7 +67,9 @@ export default function App() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setisLoading] = useState(true);
-  // console.log(currentUser)
+  const authContext = {
+    currentUser,
+  };
   const fetchToken = async () => {
     try {
       const token = await AsyncStorage.getItem("UserToken");
@@ -65,32 +77,61 @@ export default function App() {
         const data = await showCurrentUser();
         await setCurrentUser(data["data"]);
         setisAuthenticated(true);
+        setisLoading(false);
       }
-    } catch (error) {
-      console.log("token error", error);
-    } 
+    } catch (error) {}
   };
   React.useEffect(() => {
     fetchToken();
   }, []);
 
   const Stack = createStackNavigator();
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-        initialRouteName="CreateEvent"
-      >
-        <Stack.Screen options={{ headerShown: false }} name="SingIn" component={SingIn} />
-        <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUp} />
-        <Stack.Screen options={{ headerShown: false }} name="Home" component={AppDrawer} />
-        <Stack.Screen options={{ headerShown: false }} name="Welcome" component={Welcome} />
-        <Stack.Screen options={{ headerShown: false }} name="CreateEvent" component={CreateEvent} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  if (isLoading) {
+    return (
+      <View style={[styles.container, styles.horizontal]}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  } else {
+    return (
+      <AuthContext.Provider value={authContext}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            initialRouteName={!!currentUser ? "Home" : "Welcome"}
+          >
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="SingIn"
+              component={SingIn}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="SignUp"
+              component={SignUp}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Home"
+              component={AppDrawer}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Welcome"
+              component={Welcome}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="CreateEvent"
+              component={CreateEvent}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AuthContext.Provider>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
