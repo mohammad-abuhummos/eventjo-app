@@ -61,13 +61,15 @@ export default function SignIn({ navigation }) {
           start={{ x: 0.9, y: 0.0 }}
           style={styles.gradient}
         >
-          <Text style={styles.nameProject}>EVEN<Text style={styles.extensionNameProject}>TS</Text>JO</Text>
+          <Text style={styles.nameProject}>
+            EVEN<Text style={styles.extensionNameProject}>TS</Text>JO
+          </Text>
           <View
             style={{
               paddingHorizontal: 40,
               paddingVertical: 20,
               width: "100%",
-              marginTop:100
+              marginTop: 100,
             }}
           >
             <AppInput
@@ -83,6 +85,7 @@ export default function SignIn({ navigation }) {
             }}
           >
             <AppInput
+              secureTextEntry={true}
               placeholder="PASSWORD"
               onChangeText={(text) => setPassword(text)}
             />
@@ -122,7 +125,7 @@ export default function SignIn({ navigation }) {
               buttonStyle={{ paddingLeft: 5 }}
               title="Sign Up"
               type="clear"
-              onPress={() => navigation.navigate('SignUp')} 
+              onPress={() => navigation.navigate("SignUp")}
             />
           </View>
         </LinearGradient>
@@ -147,13 +150,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffff",
   },
   nameProject: {
-    color: 'white',
+    color: "white",
     fontSize: 50,
-    fontWeight: 'bold',
+    fontWeight: "bold",
 
-    // 
+    //
   },
   extensionNameProject: {
-    color: '#5684A6'
-  }
+    color: "#5684A6",
+  },
 });
