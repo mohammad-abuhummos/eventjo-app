@@ -14,6 +14,8 @@ import SignUp from "./screens/Auth/SignUp";
 import Home from "./screens/Home";
 import Welcome from "./screens/Auth/Welcome";
 import CreateEvent from "./screens/CreateEvent";
+import EventDetalis from "./screens/EventDetalis";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { showCurrentUser } from "./api";
 export const AuthContext = React.createContext();
