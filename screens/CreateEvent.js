@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 
 import GradientHeader from "../components/GradientHeader";
@@ -9,7 +9,19 @@ import { LinearGradient } from "expo-linear-gradient";
 import MapView, { Marker } from "react-native-maps";
 
 export default function CreateEvent(props) {
-  const [state, setState] = React.useState({
+  const [event_title, setEvent_title] = useState(null);
+  const [event_desc, setEvent_desc] = useState(null);
+  const [event_location, setEvent_location] = useState(null);
+  const [event_location_desc, setEvent_location_desc] = useState(null);
+  const [event_date, setEvent_date] = useState(null);
+  const [event_img, setEvent_img] = useState(null);
+  const [event_ticket, setEvent_ticket] = useState(null);
+  const [created_at, setCreated_at] = useState(null);
+  const [user_id, setUser_id] = useState(null);
+  const [user_name, setUser_name] = useState(null);
+  const [user_img, setUser_img] = useState(null);
+  
+  const [state, setState] = useState({
     latitude: 31.963158,
     longitude: 35.930359,
   });

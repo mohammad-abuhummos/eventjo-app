@@ -158,7 +158,7 @@ export default function SignUp() {
                   start: { x: 0, y: 0.5 },
                   end: { x: 1, y: 0.5 },
                 }}
-                buttonStyle={{ padding: 13, borderRadius: 25 }}
+                buttonStyle={{ padding: 13, borderRadius: 25 , marginBottom:20}}
                 title="Sign Up"
                 type="clear"
                 onPress={handelClick}

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,16 +16,48 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
+
 import EventCard from "../components/EventCard";
 import GradientHeader from "../components/GradientHeader";
-
+import Axios from "axios";
+import { toEventSet } from "../models/eventInfoModel";
 export default function Home({ navigation }) {
+  const [events, setEvents] = useState([]);
+  React.useEffect(() => {
+    GetEvent();
+  }, []);
+  const GetEvent = async () => {
+    try {
+      let response = await Axios.get(`https://immense-dusk-78248.herokuapp.com/api/event/events`);
+      const responseData = response.data;
+      const resultData = responseData.data;
+      setEvents(toEventSet(resultData));
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const renderItem = (item) => {
+    return item.map((index) => {
+      return (
+        <TouchableOpacity style={styles.containerCard}   onPress={() => navigation.navigate('EventDetalis',{index})} >
+          <EventCard
+            img={{ uri: `${index.event_img}` }}
+            location={index.event_location_desc}
+            date={index.event_date}
+            sets={index.event_ticket}
+          />
+        </TouchableOpacity>
+      )
+    })
+  }
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
+      <View style={styles.container} >
         <GradientHeader height={300}>
           <View style={styles.containerProfile}>
             <View style={styles.iconsHeader}>
+
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
                 <MaterialCommunityIcons
                   name="menu-open"
@@ -44,6 +76,7 @@ export default function Home({ navigation }) {
               </View>
             </View>
             <View style={styles.profileTitle}>
+
               <View style={styles.profilePic}>
                 <Avatar
                   size={70}
@@ -88,47 +121,11 @@ export default function Home({ navigation }) {
             </View>
           </View>
           <ScrollView style={styles.scrollView}>
-            <View style={styles.containerCard}>
-              <EventCard
-                img={require("../assets/new_statesman_events.jpg")}
-                location="Amman"
-                date="2020-2-4"
-                sets="200"
-              />
-            </View>
-            <View style={styles.containerCard}>
-              <EventCard
-                img={require("../assets/new_statesman_events.jpg")}
-                location="Amman"
-                date="2020-2-4"
-                sets="200"
-              />
-            </View>
-            <View style={styles.containerCard}>
-              <EventCard
-                img={require("../assets/new_statesman_events.jpg")}
-                location="Amman"
-                date="2020-2-4"
-                sets="200"
-              />
-            </View>
-            <View style={styles.containerCard}>
-              <EventCard
-                img={require("../assets/new_statesman_events.jpg")}
-                location="Amman"
-                date="2020-2-4"
-                sets="200"
-              />
-            </View>
-            <View style={styles.containerCard}>
-              <EventCard
-                img={require("../assets/new_statesman_events.jpg")}
-                location="Amman"
-                date="2020-2-4"
-                sets="200"
-              />
-            </View>
+            {
+              renderItem(events)
+            }
           </ScrollView>
+
         </View>
       </View>
     </SafeAreaView>
@@ -136,6 +133,13 @@ export default function Home({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  buttonStyle: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 10,
+    width: '100%',
+    marginTop: 16,
+  },
   container: {
     flex: 1,
     width: "100%",
