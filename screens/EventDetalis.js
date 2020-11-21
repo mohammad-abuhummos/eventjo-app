@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,8 +9,14 @@ import {
 } from "react-native";
 import { Ionicons, AntDesign, Entypo } from "@expo/vector-icons";
 import RadioForm from "react-native-simple-radio-button";
-export default function EventDetalis() {
+import MapView, { Marker } from "react-native-maps";
+export default function EventDetalis({ route, navigation }) {
   var radio_props = [{ value: 0 }, { value: 1 }];
+  const { index } = route.params;
+  const [state, setState] = useState({
+    latitude: 31.963158,
+    longitude: 35.930359,
+  });
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -20,7 +26,7 @@ export default function EventDetalis() {
               name="ios-arrow-back"
               size={25}
               style={styles.backIcon}
-              onPress={() => navigation.navigate("DrawerOpen")}
+              onPress={() => navigation.goBack()}
             />
           </View>
           <View style={styles.camera}>
@@ -42,15 +48,22 @@ export default function EventDetalis() {
         </View>
         <View style={styles.imgBox}>
           <Image
-            source={require("../assets/new_statesman_events.jpg")}
+            uri={index.event_img}
             style={styles.imgEvent}
           />
         </View>
         <View style={styles.volunteerBox}>
-          <View style={styles.boxRadioButton}>
+          <View style={{flexDirection:"column",with:'70%'}}>
+            <View style={{ flexDirection: "row", paddingLeft: 10 }}>
+              <Text style={styles.numberSet}>{index.event_ticket}<Text style={styles.textSet}> sets left</Text></Text></View>
+            <View style={{ flexDirection: "row", paddingLeft: 10 }}>
+              <Text style={styles.numberSet}>{index.event_ticket}<Text style={styles.textSet}> sets left</Text></Text>
+            </View>
+          </View>
+          <View style={{ marginLeft: 20,flexDirection:"column",with:'30%' }}>
             <RadioForm
               radio_props={radio_props}
-              initial={1}
+              initial={0}
               formHorizontal={false}
               buttonColor={"#2196f3"}
               animation={true}
@@ -61,81 +74,74 @@ export default function EventDetalis() {
               buttonSize={8}
             />
           </View>
-          <View style={styles.componentBox}>
-            <View style={styles.volunteer}>
-              <Text style={styles.numberVolunteer}>50 </Text>
-              <Text style={styles.txtVolunteer}>متطوع </Text>
-            </View>
-            <View style={styles.wach}>
-              <Text style={styles.numberVolunteer}>60 </Text>
-              <Text style={styles.txtVolunteer}>مشاهد </Text>
-            </View>
-          </View>
         </View>
         <View style={styles.descriptionBox}>
           <View style={styles.titleBox}>
             <Text
               style={(styles.txtTitle, { fontWeight: "bold", fontSize: 30 })}
             >
-              التفاصيل
+              {index.event_title}
             </Text>
           </View>
           <View style={styles.DateBox}>
-            <Text
-              style={{
-                alignSelf: "center",
-                paddingRight: 20,
-                fontWeight: "bold",
-                fontSize: 20,
-                color: "#8d8d8d",
-              }}
-            >
-              2020/1/2
-            </Text>
             <AntDesign
               name="calendar"
               size={30}
               color="black"
               color="#8d8d8d"
             />
-          </View>
-          <View style={styles.locationBox}>
             <Text
               style={{
                 alignSelf: "center",
-                paddingRight: 20,
                 fontWeight: "bold",
+                marginLeft: 10,
                 fontSize: 20,
                 color: "#8d8d8d",
               }}
             >
-              عمان المدينة الرياضية
+              {index.event_date}
             </Text>
+
+          </View>
+          <View style={styles.locationBox}>
             <Entypo
               name="location-pin"
-              size={40}
+              size={30}
               color="black"
               color="#8d8d8d"
             />
-          </View>
-          <View style={styles.aboutBox}>
             <Text
               style={{
                 alignSelf: "center",
-                paddingRight: 20,
+                marginLeft: 10,
                 fontWeight: "bold",
                 fontSize: 20,
                 color: "#8d8d8d",
               }}
             >
-              تفاصيل الحدث
+              {index.event_location_desc}
             </Text>
+
+          </View>
+          <View style={styles.aboutBox}>
             <AntDesign
               name="infocirlce"
               size={30}
               color="black"
               color="#8d8d8d"
             />
+            <Text
+              style={{
+                alignSelf: "center",
+                fontWeight: "bold",
+                fontSize: 20,
+                marginLeft: 10,
+                color: "#8d8d8d",
+              }}
+            >
+              About Event
+            </Text>
+
           </View>
           <View style={styles.aboutText}>
             <Text
@@ -143,7 +149,6 @@ export default function EventDetalis() {
                 (styles.text,
                 {
                   alignSelf: "center",
-                  paddingRight: 20,
                   fontWeight: "bold",
                   fontSize: 20,
                   marginTop: 20,
@@ -151,32 +156,22 @@ export default function EventDetalis() {
                 })
               }
             >
-              إذا كنت ترغب في إنشاء تطبيق جوال لمشروعك أو لشركتك، فأول سؤال
-              سيتبادر إلى ذهنك هل تقوم ببناء التطبيق لنظام التشغيل أندرويد
-              (Android) أم نظام (iOS)؟ الجواب السهل قد يكون أن تنشئ التطبيق على
-              كلاهما، لتضمن لتطبيقك فرصة أكبر للنجاح والانتشار. لكنّ الحقيقة أنّ
-              إنشاء نسختين من التطبيق؛ إحداهما لأندرويد والأخرى لـ iOS قد يكون
-              مكلفًا من جهة الوقت والمال، لذا يجب عليك أن تختار! لماذا يجب أن
-              تختار بين أندرويد و iOS عند إنشاء تطبيق جوال؟ آخر شيء تريده أن
-              تنشئ تطبيق أندرويد لتكتشف أنّ النسبة الأكبر من عملائك تعمل على
-              iOS، أو العكس. قد لا يكون الاختيار بين النظامين سهلاً، فرغم أنّ
-              كليهما يقدمان مزايا متشابهة إلى حد بعيد، إلا أنّ هناك بعض الفروقات
-              من ناحية سلوكيات المستخدمين والفئات الديمغرافية وسياسة النشر
-              وعوامل أخرى. هناك حل وسطي، وهو بناء تطبيق هجين يعمل على كلا
-              النظامين، لكنّ هذا الأمر له بعض السلبيات وقد لا يصلح للجميع. لذا
-              سنفترض أنّك تريد إنشاء تطبيق أصلي، وسنساعدك خلال هذا المقال على
-              اختيار المنصة المناسبة لك، إذ سنُفاضل بين المنصتين بناء على خمسة
-              عوامل، وهي: الشريحة المستهدفة، والبيع على التطبيق وكسب المال،
-              وتكلفة إنشاء التطبيق ووقت إنجازه، والمزايا، وسياسة النشر.
+              {index.event_desc}
             </Text>
           </View>
         </View>
         <View style={styles.locationGoogle}>
           <View style={styles.imgBox}>
-            <Image
-              source={require("../assets/Simple-Location-Picker.png")}
-              style={styles.imgEvent}
-            />
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: 31.963158,
+                longitude: 35.930359,
+                latitudeDelta: 0.5,
+                longitudeDelta: 0.5,
+              }}
+            >
+            </MapView>
           </View>
         </View>
       </ScrollView>
@@ -185,6 +180,12 @@ export default function EventDetalis() {
 }
 
 const styles = StyleSheet.create({
+  numberSet: {
+    fontSize: 40, fontWeight: 'bold'
+  },
+  textSet: {
+    fontSize: 20, color: "#898989",
+  },
   container: {
     flex: 1,
     width: "100%",
@@ -226,12 +227,11 @@ const styles = StyleSheet.create({
   },
   volunteerBox: {
     width: "90%",
-    height: 50,
+    height: 130,
     backgroundColor: "white",
     alignSelf: "center",
     marginTop: 20,
     borderRadius: 10,
-    flexDirection: "row",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -241,33 +241,18 @@ const styles = StyleSheet.create({
     shadowRadius: 11.95,
     elevation: 18,
   },
-  componentBox: {
-    flexDirection: "column",
-    width: "30%",
-    alignItems: "flex-end",
-    paddingRight: 10,
-    paddingTop: 5,
+
+
+  map: {
+    height: 200,
+    width: "100%",
   },
-  volunteer: {
-    flexDirection: "row",
-  },
-  wach: {
-    flexDirection: "row",
-  },
-  numberVolunteer: {
-    color: "black",
-    fontWeight: "bold",
-  },
-  txtVolunteer: {
-    color: "#BABABA",
-    fontSize: 15,
-  },
+
   descriptionBox: {
     width: "100%",
     paddingHorizontal: 30,
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
     marginTop: 20,
+
   },
   locationBox: {
     marginRight: -5,
@@ -281,7 +266,6 @@ const styles = StyleSheet.create({
   aboutBox: {
     marginTop: 20,
     flexDirection: "row",
-    marginRight: -1,
   },
   scrollView: {},
   locationGoogle: {
@@ -291,8 +275,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   boxRadioButton: {
-    flexDirection: "column",
-    width: "70%",
-    alignItems: "flex-end",
+
   },
 });
