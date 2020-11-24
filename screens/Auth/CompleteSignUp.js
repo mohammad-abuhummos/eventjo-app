@@ -10,10 +10,10 @@ import {
   ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import AppInput from "../components/AppInput";
+import AppInput from "../../components/AppInput";
 import { Button } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
-import GradientHeader from "../components/GradientHeader";
+import GradientHeader from "../../components/GradientHeader";
 import { Ionicons } from "@expo/vector-icons";
 import { setUserToken } from "./Auth/SignIn";
 import Axios from "axios";
@@ -125,7 +125,7 @@ export default function CompleteSignUp() {
                     source={
                       !!image
                         ? { uri: image.uri }
-                        : require("../assets/add-image-icon.png")
+                        : require("../../assets/add-image-icon.png")
                     }
                     style={{ width: 142, height: 142, borderRadius: 100 }}
                   />
