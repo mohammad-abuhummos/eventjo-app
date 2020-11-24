@@ -62,19 +62,33 @@ export default function Home({ navigation }) {
             </View>
             <View style={styles.searchSection}>
               <TextInput
-                style={styles.searchInput}
+                style={[
+                  styles.searchInput,
+                  {
+                    borderBottomLeftRadius: 15,
+                    borderTopLeftRadius: 15,
+                    borderRadius: 0,
+                  },
+                ]}
                 placeholder="بحث"
                 onChangeText={(value) => this.setState({ comment: value })}
               />
-              <View style={styles.searchIcon}>
-                <LinearGradient
-                  colors={["#6AF1C5", "#3D7BF7"]}
-                  start={{ x: 0.9, y: 0.0 }}
-                  style={{ borderRadius: 15 }}
-                >
-                  <MaterialIcons name="search" size={24} color="white" />
-                </LinearGradient>
-              </View>
+
+              <LinearGradient
+                colors={["#6AF1C5", "#3D7BF7"]}
+                start={{ x: 0.9, y: 0.0 }}
+                style={{
+                  borderBottomRightRadius: 15,
+                  borderTopRightRadius: 15,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 50,
+                  height: 38,
+                }}
+              >
+                <MaterialIcons name="search" size={24} color="white" />
+              </LinearGradient>
             </View>
           </View>
         </GradientHeader>
@@ -192,20 +206,15 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     paddingRight: 45,
-    height: 37,
+    height: 40,
     borderColor: "white",
     borderWidth: 1,
     backgroundColor: "white",
-    borderRadius: 20,
     width: "100%",
   },
   searchIcon: {
-    position: "absolute",
     backgroundColor: "blue",
     borderRadius: 20,
-    color: "white",
-    marginTop: 6,
-    right: 10,
   },
   bellIcon: {},
   menuIcon: { padding: 10 },
@@ -252,7 +261,7 @@ const styles = StyleSheet.create({
   searchSection: {
     flexDirection: "row",
     alignSelf: "center",
-    marginHorizontal: "10%",
+    marginHorizontal: "17%",
     marginTop: 20,
   },
   searchInput: {
