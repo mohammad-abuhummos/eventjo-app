@@ -1,13 +1,6 @@
-// import moment from "moment";
-import BaseModel from "./baseModel";
-
+import React from 'react';
+import {Alert} from 'react-native';
 export function isPresent(val) {
-  if (Array.isArray(val)) {
-    return !!val.length;
-  }
-  if (typeof val === "object" && val !== null) {
-    return !isEmptyObject(val);
-  }
   return !!val;
 }
 
@@ -24,40 +17,33 @@ export function isMatching(val_1, val_2) {
   return isPresent(val_1) && isPresent(val_2) && val_1 === val_2;
 }
 
-export function isNumber(val) {
-  return !isNaN(val);
+export function isPasword(val_1) {
+  return isPresent(val_1) && val_1 > 3;
 }
 
+export function isName(val_1) {
+  console.log('val_1.length', isPresent(String(val_1)));
+  return (
+    isPresent(String(val_1)) &&
+    String(val_1).length > 3 &&
+    String(val_1).length < 12
+  );
+}
 
+export function isPhone(val_1) {
+  return isPresent(String(val_1)) && String(val_1).length === 10;
+}
 
-// export function parseDate(date) {
-//   if (!date) return null;
-//   return moment(date);
-// }
+export function collectionRequestObjects(collection) {
+  return collection.map((item) => {
+    return item.toRequestObject();
+  });
+}
 
-// export function isEmptyObject(obj) {
-//   return !Object.keys(obj).length;
-// }
+export function parseDate(date) {
+  return date;
+}
 
-
-// export function yearsOptions() {
-//   return [...Array(50)].map((_, idx) => {
-//     const year = moment()
-//       .add(-18 - idx, "year")
-//       .format("YYYY");
-//     return toSelectOption(year, year);
-//   });
-// }
-
-// export function monthsOptions() {
-//   return moment
-//     .langData()
-//     .monthsShort()
-//     .map((val, idx) => toSelectOption(val, idx));
-// }
-
-// export function daysOptions(momentDate) {
-//   return [...Array((momentDate || moment()).daysInMonth()).keys()].map((val) =>
-//     toSelectOption(val + 1, val + 1)
-//   );
-// }
+export function displayError(title, body = null) {
+  Alert.alert(title, body);
+}

@@ -28,7 +28,6 @@ export default function CreateEvent(props) {
   const onMapPress = (e) => {
     setState(e.nativeEvent.coordinate);
   };
-  console.log(state);
 
   return (
     <SafeAreaView style={styles.container}>

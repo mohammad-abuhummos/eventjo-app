@@ -1,5 +1,5 @@
 import BaseModel from "./baseModel";
-export default class eventInfoModel extends BaseModel {
+export default class EventInfoModel extends BaseModel {
   constructor(args) {
     super(args);
     const { id, event_title, event_desc, event_location, event_location_desc, event_date, event_img, event_ticket, created_at, user_id, user_name, user_img } = args;
@@ -20,7 +20,7 @@ export default class eventInfoModel extends BaseModel {
 
 export const toEventSet = (arr) => {
   return arr.map((val) => {
-    return new eventInfoModel(val);
+    return new EventInfoModel(val);
   });
 };
 
