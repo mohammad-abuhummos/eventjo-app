@@ -12,82 +12,86 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import AppInput from "../../components/AppInput";
 import { Button } from "react-native-elements";
-import * as ImagePicker from "expo-image-picker";
 import GradientHeader from "../../components/GradientHeader";
 import { Ionicons } from "@expo/vector-icons";
-import { setUserToken } from "./Auth/SignIn";
+import { setUserToken } from "./SignIn";
 import Axios from "axios";
-import { useNavigation } from "@react-navigation/native";
+import DatePicker from "react-native-datepicker";
+import RadioButtonRN from "radio-buttons-react-native";
+import { displayError } from "../../models/helpers";
+import CompleteSignUpModel from "../../models/CompleteSignUpModel";
 
-export default function CompleteSignUp() {
-  const navigation = useNavigation();
-  const [image, setImage] = React.useState(null);
-  const [name, setName] = React.useState(null);
-  const [email, setEmail] = React.useState(null);
-  const [password, setPassword] = React.useState(null);
-  const [Repassword, setRePassword] = React.useState(null);
+export default function CompleteSignUp({ route, navigation }) {
+  const { image, name, email, password } = route.params;
+  const currentDate = () => {
+    return new Date().toJSON().slice(0, 10).replace(/-/g, "-");
+  };
+  const [phone, setPhone] = React.useState();
+  const [address, setAddress] = React.useState();
+  const [gender, setGender] = React.useState();
+  const [dateOfBrith, setDateOfBrith] = React.useState();
 
   const SingUpPost = async () => {
-    const formData = new FormData();
-    let uriParts = image.uri.split(".");
-    let fileType = uriParts[uriParts.length - 1];
-    formData.append("user_img", {
-      uri: image.uri,
-      name: `image.${fileType}`,
-      type: `image/${fileType}`,
-    });
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-    let axiosConfig = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-      },
-    };
-    Axios.post(
-      `https://immense-dusk-78248.herokuapp.com/api/auth/register`,
-      formData,
-      axiosConfig
-    )
-      .then((res) => {
-        setUserToken(res.data["access_token"]);
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log("errr", e);
-      });
+    let User_info = new CompleteSignUpModel(
+      phone,
+      address,
+      dateOfBrith,
+      gender
+    );
+    console.log("image", !!image);
+    if (User_info.isValid()) {
+      const formData = new FormData();
+      if (!!image && image.uri) {
+        let uriParts = image.uri.split(".");
+        let fileType = uriParts[uriParts.length - 1];
+        formData.append("user_img", {
+          uri: image.uri,
+          name: `image.${fileType}`,
+          type: `image/${fileType}`,
+        });
+      }
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("phone_number", phone);
+      formData.append("address", address);
+      formData.append("gender", gender);
+      formData.append("date_of_birth", dateOfBrith);
+      let axiosConfig = {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      Axios.post(
+        `https://immense-dusk-78248.herokuapp.com/api/auth/register`,
+        formData,
+        axiosConfig
+      )
+        .then((res) => {
+          setUserToken(res.data["access_token"]);
+          navigation.navigate("AppDrawer");
+          console.log(res.data);
+        })
+        .catch((e) => {
+          console.log("errr", e);
+        });
+    } else {
+      displayError("Invalid Information", User_info.errors().join(", "));
+    }
   };
 
   const handelClick = () => {
-    SingUpPost().then(navigation.navigate("Home"));
+    SingUpPost();
   };
-
-  React.useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const {
-          status,
-        } = await ImagePicker.requestCameraRollPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-      }
-    })();
-  }, []);
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      exif: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setImage(result);
-    }
-  };
+  const data = [
+    {
+      label: "Female",
+    },
+    {
+      label: "Male",
+    },
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -120,41 +124,69 @@ export default function CompleteSignUp() {
               }}
             >
               <View style={styles.selectImage}>
-                <TouchableOpacity onPress={pickImage}>
+                <View>
                   <Image
                     source={
                       !!image
                         ? { uri: image.uri }
-                        : require("../../assets/add-image-icon.png")
+                        : require("../../assets/card-img-1.png")
                     }
                     style={{ width: 142, height: 142, borderRadius: 100 }}
                   />
-                </TouchableOpacity>
+                </View>
               </View>
               <View style={styles.InputWidth}>
                 <AppInput
-                  onChangeText={(text) => setName(text)}
-                  placeholder="FULL NAME"
+                  onChangeText={(text) => setPhone(text)}
+                  placeholder="Phone Number"
                 />
               </View>
               <View style={styles.InputWidth}>
                 <AppInput
-                  onChangeText={(text) => setEmail(text)}
-                  placeholder="EMAIL ADDRESS"
+                  onChangeText={(text) => setAddress(text)}
+                  placeholder="ADDRESS"
                 />
               </View>
               <View style={styles.InputWidth}>
-                <AppInput
-                  secureTextEntry={true}
-                  onChangeText={(text) => setPassword(text)}
-                  placeholder="PASSWORD"
+                <DatePicker
+                  style={{ width: "100%" }}
+                  date={dateOfBrith}
+                  mode="date"
+                  placeholder="Select date"
+                  format="YYYY-MM-DD"
+                  minDate="1990-01-01"
+                  maxDate={currentDate()}
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  showIcon={false}
+                  customStyles={{
+                    dateInput: {
+                      backgroundColor: "#F5F5F5",
+                      width: "100%",
+                      padding: 28,
+                      paddingLeft: 30,
+                      borderRadius: 50,
+                      borderWidth: 0,
+                      alignItems: "flex-start",
+                    },
+                    placeholderText: {
+                      color: "#a7a7a7",
+                    },
+                    // ... You can check the source to find the other keys.
+                  }}
+                  onDateChange={(date) => {
+                    setDateOfBrith(date);
+                  }}
                 />
               </View>
-              <View style={styles.InputWidth}>
-                <AppInput
-                  placeholder="RE-TYPE PASSWORD"
-                  secureTextEntry={true}
-                  onChangeText={(text) => setRePassword(text)}
+              <View style={{ paddingHorizontal: 20, paddingTop: 35 }}>
+                <Text style={{ fontSize: 18 }}>Gender</Text>
+                <RadioButtonRN
+                  data={data}
+                  box={false}
+                  initial={1}
+                  circleSize={10}
+                  selectedBtn={(e) => setGender(e.label)}
                 />
               </View>
               <View style={styles.InputWidth}>
@@ -169,7 +201,7 @@ export default function CompleteSignUp() {
                   buttonStyle={{ padding: 13, borderRadius: 25 }}
                   title="Sign Up"
                   type="clear"
-                  onPress={handelClick}
+                  onPress={() => SingUpPost()}
                 />
               </View>
             </View>

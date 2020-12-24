@@ -18,6 +18,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { setUserToken } from "./SignIn";
 import Axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import userSignUpModel from "../../models/userSignUpModel";
+import { displayError } from "../../models/helpers";
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -27,40 +29,19 @@ export default function SignUp() {
   const [password, setPassword] = React.useState(null);
   const [Repassword, setRePassword] = React.useState(null);
 
-  const SingUpPost = async () => {
-    const formData = new FormData();
-    let uriParts = image.uri.split(".");
-    let fileType = uriParts[uriParts.length - 1];
-    formData.append("user_img", {
-      uri: image.uri,
-      name: `image.${fileType}`,
-      type: `image/${fileType}`,
-    });
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-    let axiosConfig = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-      },
-    };
-    Axios.post(
-      `https://immense-dusk-78248.herokuapp.com/api/auth/register`,
-      formData,
-      axiosConfig
-    )
-      .then((res) => {
-        setUserToken(res.data["access_token"]);
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log("errr", e);
-      });
-  };
-
-  const handelClick = () => {
-    SingUpPost().then(navigation.navigate("Home"));
+  const handelClick = (Name, Email, Password, password_confirmation) => {
+    let User_info = new userSignUpModel(
+      Name,
+      Email,
+      Password,
+      password_confirmation
+    );
+    if (User_info.isValid()) {
+      navigation.navigate("CompleteSignUp", {image, name, email, password });
+    } else {
+      console.log("Email", Email);
+      displayError("Invalid Information", User_info.errors().join(", "));
+    }
   };
 
   React.useEffect(() => {
@@ -158,10 +139,14 @@ export default function SignUp() {
                   start: { x: 0, y: 0.5 },
                   end: { x: 1, y: 0.5 },
                 }}
-                buttonStyle={{ padding: 13, borderRadius: 25 , marginBottom:20}}
+                buttonStyle={{
+                  padding: 13,
+                  borderRadius: 25,
+                  marginBottom: 20,
+                }}
                 title="Sign Up"
                 type="clear"
-                onPress={handelClick}
+                onPress={() => handelClick(name, email, password, Repassword)}
               />
             </View>
           </View>

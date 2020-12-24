@@ -15,9 +15,11 @@ import Home from "./screens/Home";
 import Welcome from "./screens/Auth/Welcome";
 import CreateEvent from "./screens/CreateEvent";
 import EventDetalis from "./screens/EventDetalis";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { showCurrentUser } from "./api";
+import CompleteSignUp from "./screens/Auth/CompleteSignUp";
+
+
 export const AuthContext = React.createContext();
 const Drawer = createDrawerNavigator();
 function CustomDrawerContentComponent(props) {
@@ -88,7 +90,7 @@ export default function App() {
   }, []);
 
   const Stack = createStackNavigator();
-  if (isLoading) {
+  if (false) {
     return (
       <View style={[styles.container, styles.horizontal]}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -102,12 +104,17 @@ export default function App() {
             screenOptions={{
               headerShown: false,
             }}
-            initialRouteName={!!currentUser ? "Home" : "Welcome"}
+            initialRouteName={"CreateEvent"}
           >
             <Stack.Screen
               options={{ headerShown: false }}
               name="SingIn"
               component={SingIn}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="CompleteSignUp"
+              component={CompleteSignUp}
             />
             <Stack.Screen
               options={{ headerShown: false }}
