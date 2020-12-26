@@ -8,7 +8,7 @@ export const getUserToken = async () => {
   } catch (e) {
     console.log("e", e);
   }
-  const token = "Bearer " + UserToken;
+  const token = "Bearer" + UserToken;
   return token;
 };
 
