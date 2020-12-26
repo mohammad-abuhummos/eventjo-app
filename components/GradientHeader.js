@@ -10,8 +10,8 @@ export default function GradientHeader(props) {
       style={{
         width: "100%",
         minHeight: height,
-        borderBottomLeftRadius: 30,
-        borderBottomRightRadius: 30,
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
       }}
     >
       {props.children}

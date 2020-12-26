@@ -19,78 +19,79 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { showCurrentUser } from "./api";
 import CompleteSignUp from "./screens/Auth/CompleteSignUp";
 
-
 export const AuthContext = React.createContext();
-const Drawer = createDrawerNavigator();
-function CustomDrawerContentComponent(props) {
-  return (
-    <View style={{ paddingVertical: 60 }}>
-      <View style={{ padding: 20 }}>
-        <Image
-          source={require("./assets/card-img-1.png")}
-          style={{ width: 100, height: 100, borderRadius: 50 }}
-        />
-        <Text style={{ fontSize: 20, fontWeight: "bold", paddingLeft: 15 }}>
-          kdcnjdn
-        </Text>
-        <Text style={{ paddingLeft: 15 }}>Bela@gmail.com</Text>
-      </View>
-
-      <DrawerItemList {...props} />
-      <DrawerItem label="Help" onPress={() => alert("Link to help")} />
-    </View>
-  );
-}
-
-function AppDrawer() {
-  return (
-    <Drawer.Navigator
-      initialRouteName="Home"
-      drawerContent={(props) => <CustomDrawerContentComponent {...props} />}
-    >
-      <Drawer.Screen
-        options={{ headerShown: false }}
-        name="Home"
-        component={Home}
-      />
-      <Drawer.Screen
-        options={{ headerShown: false }}
-        name="SingIn"
-        component={SingIn}
-      />
-      <Drawer.Screen
-        options={{ headerShown: false }}
-        name="SingUp"
-        component={SignUp}
-      />
-    </Drawer.Navigator>
-  );
-}
 
 export default function App() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [currentUserToken, setCurrentUserToken] = useState(null);
   const [isLoading, setisLoading] = useState(true);
   const authContext = {
     currentUser,
+    currentUserToken,
   };
+  const Drawer = createDrawerNavigator();
+  function CustomDrawerContentComponent(props) {
+    if (!!currentUser) {
+      return (
+        <View style={{ paddingVertical: 60 }}>
+          <View style={{ padding: 20 }}>
+            <Image
+              source={{
+                uri: currentUser.user_img,
+              }}
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+            />
+            <Text style={{ fontSize: 20, fontWeight: "bold", paddingLeft: 15 }}>
+              {currentUser.name}
+            </Text>
+            <Text style={{ paddingLeft: 15 }}>{currentUser.email}</Text>
+          </View>
+
+          <DrawerItemList {...props} />
+        </View>
+      );
+    }
+  }
+
+  function AppDrawer() {
+    return (
+      <Drawer.Navigator
+        initialRouteName="Home"
+        drawerContent={(props) => <CustomDrawerContentComponent {...props} />}
+      >
+        <Drawer.Screen
+          options={{ headerShown: false }}
+          name="Home"
+          component={Home}
+        />
+        <Drawer.Screen
+          options={{ headerShown: false }}
+          name="Create Event"
+          component={CreateEvent}
+        />
+      </Drawer.Navigator>
+    );
+  }
   const fetchToken = async () => {
     try {
       const token = await AsyncStorage.getItem("UserToken");
       if (!!token) {
         const data = await showCurrentUser();
         await setCurrentUser(data["data"]);
+        setCurrentUserToken(token);
         setisAuthenticated(true);
         setisLoading(false);
       }
-    } catch (error) {}
+    } catch (error) {
+      setisLoading(false);
+    }
   };
   React.useEffect(() => {
     fetchToken();
   }, []);
-
   const Stack = createStackNavigator();
-  if (false) {
+  if (isLoading) {
     return (
       <View style={[styles.container, styles.horizontal]}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -104,7 +105,7 @@ export default function App() {
             screenOptions={{
               headerShown: false,
             }}
-            initialRouteName={"CreateEvent"}
+            initialRouteName={!!isAuthenticated ? "Home" : "SingIn"}
           >
             <Stack.Screen
               options={{ headerShown: false }}
@@ -125,6 +126,11 @@ export default function App() {
               options={{ headerShown: false }}
               name="Home"
               component={AppDrawer}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="EventDetalis"
+              component={EventDetalis}
             />
             <Stack.Screen
               options={{ headerShown: false }}

@@ -3,6 +3,9 @@ import {Alert} from 'react-native';
 export function isPresent(val) {
   return !!val;
 }
+export function isPresentValid(val) {
+  return !!String(val);
+}
 
 export function isPresentIn(val, options) {
   return options.includes(val);

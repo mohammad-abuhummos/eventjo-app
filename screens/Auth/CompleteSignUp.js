@@ -70,7 +70,7 @@ export default function CompleteSignUp({ route, navigation }) {
       )
         .then((res) => {
           setUserToken(res.data["access_token"]);
-          navigation.navigate("AppDrawer");
+          navigation.navigate("Home");
           console.log(res.data);
         })
         .catch((e) => {

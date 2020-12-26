@@ -6,9 +6,9 @@ import {
   View,
   Image,
   ScrollView,
+  Button,
 } from "react-native";
 import { Ionicons, AntDesign, Entypo } from "@expo/vector-icons";
-import RadioForm from "react-native-simple-radio-button";
 import MapView, { Marker } from "react-native-maps";
 export default function EventDetalis({ route, navigation }) {
   var radio_props = [{ value: 0 }, { value: 1 }];
@@ -17,6 +17,7 @@ export default function EventDetalis({ route, navigation }) {
     latitude: 31.963158,
     longitude: 35.930359,
   });
+  console.log(index);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -47,32 +48,45 @@ export default function EventDetalis({ route, navigation }) {
           </View>
         </View>
         <View style={styles.imgBox}>
-          <Image
-            uri={index.event_img}
-            style={styles.imgEvent}
-          />
+          <Image source={{ uri: index.event_img }} style={styles.imgEvent} />
         </View>
         <View style={styles.volunteerBox}>
-          <View style={{flexDirection:"column",with:'70%'}}>
-            <View style={{ flexDirection: "row", paddingLeft: 10 }}>
-              <Text style={styles.numberSet}>{index.event_ticket}<Text style={styles.textSet}> sets left</Text></Text></View>
-            <View style={{ flexDirection: "row", paddingLeft: 10 }}>
-              <Text style={styles.numberSet}>{index.event_ticket}<Text style={styles.textSet}> sets left</Text></Text>
+          <View
+            style={{
+              flexDirection: "row",
+              display: "flex",
+              width: "100%",
+              justifyContent: "space-between",
+              alignContent: "center",
+              paddingHorizontal: "5%",
+            }}
+          >
+            <View style={styles.center}>
+              <View>
+                <Text style={{ color: "#000", fontSize: 17 }}>Seats</Text>
+              </View>
+              <View>
+                <Text style={{ color: "#000", fontSize: 17, paddingBottom: 2 }}>
+                  {index.event_ticket_watch}
+                </Text>
+              </View>
+              <View style={styles.eventButton}>
+                <Text style={{ color: "#fff" }}>Going</Text>
+              </View>
             </View>
-          </View>
-          <View style={{ marginLeft: 20,flexDirection:"column",with:'30%' }}>
-            <RadioForm
-              radio_props={radio_props}
-              initial={0}
-              formHorizontal={false}
-              buttonColor={"#2196f3"}
-              animation={true}
-              onPress={(value) => {
-                value: value;
-              }}
-              style={styles.radioButton}
-              buttonSize={8}
-            />
+            <View style={styles.center}>
+              <View>
+                <Text style={{ color: "#000", fontSize: 17 }}>Volanteria</Text>
+              </View>
+              <View>
+                <Text style={{ color: "#000", fontSize: 17, paddingBottom: 2 }}>
+                  {index.event_ticket_vol}
+                </Text>
+              </View>
+              <View style={styles.eventButton}>
+                <Text style={{ color: "#fff" }}>Volanter</Text>
+              </View>
+            </View>
           </View>
         </View>
         <View style={styles.descriptionBox}>
@@ -101,12 +115,11 @@ export default function EventDetalis({ route, navigation }) {
             >
               {index.event_date}
             </Text>
-
           </View>
           <View style={styles.locationBox}>
             <Entypo
               name="location-pin"
-              size={30}
+              size={40}
               color="black"
               color="#8d8d8d"
             />
@@ -119,9 +132,8 @@ export default function EventDetalis({ route, navigation }) {
                 color: "#8d8d8d",
               }}
             >
-              {index.event_location_desc}
+              {index.event_location}
             </Text>
-
           </View>
           <View style={styles.aboutBox}>
             <AntDesign
@@ -141,7 +153,6 @@ export default function EventDetalis({ route, navigation }) {
             >
               About Event
             </Text>
-
           </View>
           <View style={styles.aboutText}>
             <Text
@@ -171,6 +182,10 @@ export default function EventDetalis({ route, navigation }) {
                 longitudeDelta: 0.5,
               }}
             >
+              <Marker
+                coordinate={{ latitude: Number(index.event_location_latitude), longitude: Number(index.event_location_longitude) }}
+                title={index.title}
+              />
             </MapView>
           </View>
         </View>
@@ -181,10 +196,12 @@ export default function EventDetalis({ route, navigation }) {
 
 const styles = StyleSheet.create({
   numberSet: {
-    fontSize: 40, fontWeight: 'bold'
+    fontSize: 40,
+    fontWeight: "bold",
   },
   textSet: {
-    fontSize: 20, color: "#898989",
+    fontSize: 20,
+    color: "#898989",
   },
   container: {
     flex: 1,
@@ -230,6 +247,7 @@ const styles = StyleSheet.create({
     height: 130,
     backgroundColor: "white",
     alignSelf: "center",
+    justifyContent: "center",
     marginTop: 20,
     borderRadius: 10,
     shadowColor: "#000",
@@ -242,7 +260,6 @@ const styles = StyleSheet.create({
     elevation: 18,
   },
 
-
   map: {
     height: 200,
     width: "100%",
@@ -252,7 +269,6 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 30,
     marginTop: 20,
-
   },
   locationBox: {
     marginRight: -5,
@@ -274,7 +290,17 @@ const styles = StyleSheet.create({
   radioButton: {
     marginTop: 4,
   },
-  boxRadioButton: {
-
+  eventButton: {
+    flexDirection: "row",
+    backgroundColor: "#47A5FF",
+    width: 130,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    height: 35,
+  },
+  center: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

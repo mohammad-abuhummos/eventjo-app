@@ -16,23 +16,28 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-
 import EventCard from "../components/EventCard";
 import GradientHeader from "../components/GradientHeader";
 import Axios from "axios";
 import { toEventSet } from "../models/eventInfoModel";
+import { AuthContext } from "../App";
+
 export default function Home({ navigation }) {
   const [events, setEvents] = useState([]);
+  console.log(events)
+  const { currentUser } = React.useContext(AuthContext);
+  console.log("currentUser", currentUser);
   React.useEffect(() => {
     GetEvent();
   }, []);
   const GetEvent = async () => {
     try {
-      let response = await Axios.get(`https://immense-dusk-78248.herokuapp.com/api/event/events`);
+      let response = await Axios.get(
+        `https://immense-dusk-78248.herokuapp.com/api/event/events-approved`
+      );
       const responseData = response.data;
       const resultData = responseData.data;
-      setEvents(toEventSet(resultData));
-
+      setEvents(resultData);
     } catch (err) {
       console.error(err);
     }
@@ -40,24 +45,26 @@ export default function Home({ navigation }) {
   const renderItem = (item) => {
     return item.map((index) => {
       return (
-        <TouchableOpacity style={styles.containerCard}   onPress={() => navigation.navigate('EventDetalis',{index})} >
+        <TouchableOpacity
+          style={styles.containerCard}
+          onPress={() => navigation.navigate("EventDetalis", { index })}
+        >
           <EventCard
             img={{ uri: `${index.event_img}` }}
-            location={index.event_location_desc}
+            location={index.event_location}
             date={index.event_date}
-            sets={index.event_ticket}
+            sets={index.event_ticket_watch}
           />
         </TouchableOpacity>
-      )
-    })
-  }
+      );
+    });
+  };
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container} >
+      <View style={styles.container}>
         <GradientHeader height={300}>
           <View style={styles.containerProfile}>
             <View style={styles.iconsHeader}>
-
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
                 <MaterialCommunityIcons
                   name="menu-open"
@@ -76,21 +83,20 @@ export default function Home({ navigation }) {
               </View>
             </View>
             <View style={styles.profileTitle}>
-
               <View style={styles.profilePic}>
                 <Avatar
                   size={70}
                   rounded
                   source={{
-                    uri:
-                      "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
+                    uri: currentUser.user_img,
                   }}
                   style={styles.avatarStyle}
                 />
               </View>
+
               <View style={styles.containerName}>
-                <Text style={styles.profileName}>Hi , Evana</Text>
-                <Text style={styles.profileText}>Another txt</Text>
+                <Text style={styles.profileName}>{currentUser.name}</Text>
+                <Text style={styles.profileText}>{currentUser.email}</Text>
               </View>
             </View>
             <View style={styles.searchSection}>
@@ -135,11 +141,8 @@ export default function Home({ navigation }) {
             </View>
           </View>
           <ScrollView style={styles.scrollView}>
-            {
-              renderItem(events)
-            }
+            {renderItem(events)}
           </ScrollView>
-
         </View>
       </View>
     </SafeAreaView>
@@ -148,10 +151,10 @@ export default function Home({ navigation }) {
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
     padding: 10,
-    width: '100%',
+    width: "100%",
     marginTop: 16,
   },
   container: {
@@ -235,7 +238,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5.95,
     elevation: 18,
-    width: "80%",
+    width: "90%",
     borderRadius: 10,
     alignSelf: "center",
     marginBottom: 20,
@@ -252,7 +255,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   scrollView: {
-    height: 310,
+    height: "100%",
   },
 
   iconsHeader: {
