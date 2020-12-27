@@ -25,11 +25,10 @@ export function isPasword(val_1) {
 }
 
 export function isName(val_1) {
-  console.log('val_1.length', isPresent(String(val_1)));
   return (
     isPresent(String(val_1)) &&
     String(val_1).length > 3 &&
-    String(val_1).length < 12
+    String(val_1).length < 25
   );
 }
 

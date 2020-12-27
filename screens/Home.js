@@ -24,7 +24,7 @@ import { AuthContext } from "../App";
 
 export default function Home({ navigation }) {
   const [events, setEvents] = useState([]);
-  console.log(events)
+  console.log(events);
   const { currentUser } = React.useContext(AuthContext);
   console.log("currentUser", currentUser);
   React.useEffect(() => {

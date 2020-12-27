@@ -20,8 +20,10 @@ import DatePicker from "react-native-datepicker";
 import RadioButtonRN from "radio-buttons-react-native";
 import { displayError } from "../../models/helpers";
 import CompleteSignUpModel from "../../models/CompleteSignUpModel";
+import { AuthContext } from "../../App";
 
 export default function CompleteSignUp({ route, navigation }) {
+  const { setCurrentUserToken } = React.useContext(AuthContext);
   const { image, name, email, password } = route.params;
   const currentDate = () => {
     return new Date().toJSON().slice(0, 10).replace(/-/g, "-");
@@ -70,8 +72,8 @@ export default function CompleteSignUp({ route, navigation }) {
       )
         .then((res) => {
           setUserToken(res.data["access_token"]);
-          navigation.navigate("Home");
-          console.log(res.data);
+          setCurrentUserToken(res.data["access_token"])
+          console.log("res.data",res.data)
         })
         .catch((e) => {
           console.log("errr", e);

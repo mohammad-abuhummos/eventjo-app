@@ -17,7 +17,6 @@ export default function EventDetalis({ route, navigation }) {
     latitude: 31.963158,
     longitude: 35.930359,
   });
-  console.log(index);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
