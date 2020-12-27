@@ -66,7 +66,6 @@ export default function CreateEvent({navigation}) {
       setImage(result);
     }
   };
-  console.log("currentUserToken",currentUserToken)
 
   const CreateEvent = async () => {
     let event_info = new EventInfoModel(
@@ -97,8 +96,6 @@ export default function CreateEvent({navigation}) {
       formData.append("event_location_latitude", event_location.latitude);
       formData.append("event_ticket_watch", event_ticket);
       let Token = "Bearer" + " " +  currentUserToken;
-      console.log()
-    
       let axiosConfig = {
         headers: {
           Accept: "application/json",

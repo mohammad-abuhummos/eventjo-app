@@ -52,7 +52,6 @@ export default function EditInfo() {
     )
       .then((res) => {
         setUserToken(res.data["access_token"]);
-        console.log(res);
       })
       .catch((e) => {
         console.log("errr", e);
