@@ -22,6 +22,8 @@ import Axios from "axios";
 import { toEventSet } from "../models/eventInfoModel";
 import { AuthContext } from "../App";
 
+
+
 export default function Home({ navigation }) {
   const [events, setEvents] = useState([]);
   console.log(events);
@@ -47,6 +49,7 @@ export default function Home({ navigation }) {
       return (
         <TouchableOpacity
           style={styles.containerCard}
+          key={index.id}
           onPress={() => navigation.navigate("EventDetalis", { index })}
         >
           <EventCard

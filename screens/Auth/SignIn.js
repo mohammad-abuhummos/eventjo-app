@@ -7,6 +7,7 @@ import AppButton from "../../components/AppButton";
 import { Button } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../App";
+import i18n from 'i18n-js';
 
 export const setUserToken = async (token) => {
   try {
@@ -78,7 +79,10 @@ export default function SignIn({ navigation }) {
             }}
           >
             <Text style={styles.nameProject}>
-              EVEN<Text style={styles.extensionNameProject}>TS</Text>JO
+            EVENT<Text style={styles.extensionNameProject}>TS</Text>JO
+            </Text>
+            <Text>
+            {i18n.t('welcome')}
             </Text>
             <View
               style={{
@@ -89,7 +93,7 @@ export default function SignIn({ navigation }) {
               }}
             >
               <AppInput
-                placeholder="USERNAME"
+                placeholder= {i18n.t('welcome')}
                 onChangeText={(text) => setEmaile(text)}
               />
             </View>
