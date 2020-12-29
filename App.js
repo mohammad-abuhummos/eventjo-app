@@ -18,7 +18,18 @@ import EventDetalis from "./screens/EventDetalis";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { showCurrentUser } from "./api";
 import CompleteSignUp from "./screens/Auth/CompleteSignUp";
-
+import * as Localization from 'expo-localization';
+import * as en from './locals/en-US.json';
+import * as ar from './locals/ar.json';
+import i18n from 'i18n-js';
+// Set the key-value pairs for the different languages you want to support.
+i18n.translations = {
+  en: ar,
+  ja: en,
+};
+// Set the locale once at the beginning of your app.
+i18n.locale = "en";
+console.log("Localization.locale",Localization.locale)
 export const AuthContext = React.createContext();
 
 export default function App() {
@@ -26,9 +37,6 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [currentUserToken, setCurrentUserToken] = useState(null);
   const [isLoading, setisLoading] = useState(true);
-  console.log("isAuthenticated", !!isAuthenticated);
-  console.log("isAuthenticated", !!isAuthenticated);
-  console.log("isAuthenticated", !!isAuthenticated);
   const authContext = {
     currentUser,
     currentUserToken,
