@@ -37,7 +37,7 @@ export default function SignUp() {
       password_confirmation
     );
     if (User_info.isValid()) {
-      navigation.navigate("CompleteSignUp", {image, name, email, password });
+      navigation.navigate("CompleteSignUp", { image, name, email, password });
     } else {
       console.log("Email", Email);
       displayError("Invalid Information", User_info.errors().join(", "));

@@ -6,6 +6,7 @@ import GridItem from "./GridItem";
 
 export default function HorizantalEventsList(props) {
   const { title, onViewAll, data, loading } = props;
+  console.log("data", data);
   // console.log(renderItem)
   //   if (!!loading) {
   //     return <Tecxt>loading</Tecxt>;
@@ -24,7 +25,14 @@ export default function HorizantalEventsList(props) {
         <FlatList
           data={data}
           renderItem={({ item }) => (
-            <GridItem title={item.title} img={item.img} date={item.date} />
+            <GridItem
+              title={item.event_title}
+              img={{
+                uri: item.event_img,
+              }}
+              date={item.date}
+              index={item}
+            />
           )}
           horizontal={true}
           showsHorizontalScrollIndicator={true}
