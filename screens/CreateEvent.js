@@ -36,6 +36,7 @@ export default function CreateEvent({navigation}) {
   const [event_ticket_vol, setEvent_ticket_vol] = useState(null);
   const [image, setImage] = React.useState(null);
   const { currentUserToken } = React.useContext(AuthContext);
+  console.log(currentUserToken)
   const onMapPress = (e) => {
     setEvent_location(e.nativeEvent.coordinate);
   };

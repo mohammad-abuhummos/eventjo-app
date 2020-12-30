@@ -182,7 +182,16 @@ export default function EventDetalis({ route, navigation }) {
               }}
             >
               <Marker
-                coordinate={{ latitude: Number(index.event_location_latitude), longitude: Number(index.event_location_longitude) }}
+                coordinate={{
+                  latitude: Number(
+                    !index.event_location_latitude === "NaN" &&
+                      index.event_location_latitude
+                  ),
+                  longitude: Number(
+                    !index.event_location_latitude === "NaN" &&
+                      index.event_location_longitude
+                  ),
+                }}
                 title={index.title}
               />
             </MapView>

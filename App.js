@@ -18,10 +18,13 @@ import EventDetalis from "./screens/EventDetalis";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { showCurrentUser } from "./api";
 import CompleteSignUp from "./screens/Auth/CompleteSignUp";
-import * as Localization from 'expo-localization';
-import * as en from './locals/en-US.json';
-import * as ar from './locals/ar.json';
-import i18n from 'i18n-js';
+import * as Localization from "expo-localization";
+import * as en from "./locals/en-US.json";
+import * as ar from "./locals/ar.json";
+import i18n from "i18n-js";
+import Profile from "./screens/profile";
+import EditUserProfile from "./screens/EditeUserProfile";
+
 // Set the key-value pairs for the different languages you want to support.
 i18n.translations = {
   en: ar,
@@ -29,7 +32,7 @@ i18n.translations = {
 };
 // Set the locale once at the beginning of your app.
 i18n.locale = "en";
-console.log("Localization.locale",Localization.locale)
+console.log("Localization.locale", Localization.locale);
 export const AuthContext = React.createContext();
 
 export default function App() {
@@ -42,7 +45,7 @@ export default function App() {
     currentUserToken,
     setCurrentUser,
     setCurrentUserToken,
-    setisLoading
+    setisLoading,
   };
   const Drawer = createDrawerNavigator();
   function CustomDrawerContentComponent(props) {
@@ -100,6 +103,11 @@ export default function App() {
           options={{ headerShown: false }}
           name="Home"
           component={Home}
+        />
+        <Drawer.Screen
+          options={{ headerShown: false }}
+          name="Profile"
+          component={Profile}
         />
         <Drawer.Screen
           options={{ headerShown: false }}
@@ -164,6 +172,13 @@ export default function App() {
                   options={{ headerShown: false }}
                   name="CreateEvent"
                   component={CreateEvent}
+                />
+                <Stack.Screen
+                  options={{
+                    headerShown: false,
+                  }}
+                  name="EditUserProfile"
+                  component={EditUserProfile}
                 />
               </>
             ) : (

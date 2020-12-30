@@ -1,16 +1,64 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
-import { Avatar, Colors } from "react-native-elements";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
+import { Avatar} from "react-native-elements";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import * as Progress from "react-native-progress";
 import GradientHeader from "../components/GradientHeader";
+import { AuthContext } from "../App";
+import HorizantalEventsList from "../components/HorizantalEventList";
+import Axios from "axios";
 
-export default function Profile() {
+export default function Profile({ navigation }) {
+  const { currentUser } = React.useContext(AuthContext);
+  const [loadingNewEvents, setLoadingNewEvents] = React.useState(true);
+  const [events, setEvents] = React.useState([]);
+  const [Myevents, setMyEvents] = React.useState([]);
+  React.useEffect(() => {
+    GetEvent();
+    GetMyEvent();
+  }, []);
+
+  const GetEvent = async () => {
+    try {
+      let response = await Axios.get(
+        `https://immense-dusk-78248.herokuapp.com/api/event/events-approved`
+      );
+      const responseData = response.data;
+      const resultData = responseData.data;
+      setEvents(resultData);
+      setLoadingNewEvents(false);
+    } catch (err) {
+      console.error(err);
+      setLoadingNewEvents(false);
+    }
+  };
+  const GetMyEvent = async () => {
+    try {
+      let response = await Axios.get(
+        `https://immense-dusk-78248.herokuapp.com/api/event/events-approved`
+      );
+      const responseData = response.data;
+      const resultData = responseData.data;
+      setMyEvents(resultData);
+      setLoadingNewEvents(false);
+    } catch (err) {
+      console.error(err);
+      setLoadingNewEvents(false);
+    }
+  };
+ 
   return (
+    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.scrollView}>
     <View style={styles.container}>
-      <GradientHeader
-       height={250}
-      >
+      <GradientHeader height={250}>
         <View>
           <View style={styles.header}>
             <Ionicons
@@ -27,17 +75,24 @@ export default function Profile() {
                 size={120}
                 rounded
                 source={{
-                  uri:
-                    "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
+                  uri: currentUser.user_img,
                 }}
                 style={styles.avatarStyle}
               />
             </View>
-            <View style={styles.editBox}>
-              <Feather name="edit-2" size={24} color="white" />
+            <View style={{ position: "absolute", right: 5, top: -20 }}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("EditUserProfile");
+                }}
+              >
+                <View style={styles.editBox}>
+                  <Feather name="edit-2" size={24} color="white" />
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={styles.viewText}>
-              <Text style={styles.name}>احمد علي</Text>
+              <Text style={styles.name}>{currentUser.name}</Text>
             </View>
             <View style={styles.titleProgressBar}>
               <View>
@@ -50,35 +105,48 @@ export default function Profile() {
             <View style={styles.progressBar}>
               <Progress.Bar progress={1} style={styles.bar} />
             </View>
-            <View style={styles.describtion}>
-              <View style={styles.describtionDetails}>
-                <View style={styles.point}>
-                  <Text style={styles.textPoint}> النقاط</Text>
-                  <View>
-                    <Text style={styles.numberText}>10</Text>
-                  </View>
-                </View>
-                <View style={styles.wachEvent}>
-                  <Text style={styles.textWachEvent}>
-                    {" "}
-                    حدث قمت بالمشاركة بها
-                  </Text>
-                  <View>
-                    <Text style={styles.numberText}>10</Text>
-                  </View>
-                </View>
-                <View style={styles.makeEvent}>
-                  <Text style={styles.textMakeEvent}> حدث قمت بصنعه</Text>
-                  <View>
-                    <Text style={styles.numberText}>10</Text>
-                  </View>
-                </View>
+            <View
+              style={{
+                flexDirection: "row",
+                padding: 20,
+                justifyContent: "space-around",
+              }}
+            >
+              <View style={{ flexDirection: "column", alignItems: "center" }}>
+                <Text style={styles.fontBold}>مجموع النقاط</Text>
+                <Text style={styles.fontBold}>10</Text>
+              </View>
+              <View style={{ flexDirection: "column", alignItems: "center" }}>
+                <Text style={styles.fontBold}>نشطاتي</Text>
+                <Text style={styles.fontBold}>10</Text>
+              </View>
+              <View style={{ flexDirection: "column", alignItems: "center" }}>
+                <Text style={styles.fontBold}>مشاركتي</Text>
+                <Text style={styles.fontBold}>10</Text>
               </View>
             </View>
           </View>
         </View>
       </GradientHeader>
+      <View style={{paddingTop:100}}>
+      <HorizantalEventsList
+        data={events}
+        renderItem={events}
+        title="مشاركتي"
+        loading={loadingNewEvents}
+        // onViewAll={events}
+      />
+      <HorizantalEventsList
+        data={Myevents}
+        renderItem={Myevents}
+        title="نشطاتي"
+        loading={loadingNewEvents}
+        // onViewAll={events}
+      />
+      </View>
     </View>
+    </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -122,18 +190,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 110,
     height: 110,
-    alignSelf: "center",
-    borderRadius: 70,
-    marginTop: "-15%",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 9,
-    },
-    shadowOpacity: 0.48,
-    shadowRadius: 11.95,
-
-    elevation: 18,
+    position: "absolute",
+    right: "35%",
+    top: "-25%",
   },
   editBox: {
     backgroundColor: "#3556A5",
@@ -143,7 +202,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "flex-end",
-    marginTop: "-20%",
     marginRight: 25,
   },
   avatarStyle: {
@@ -154,6 +212,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "50%",
     marginTop: 40,
+    paddingTop: 30,
   },
   name: {
     color: "black",
@@ -184,15 +243,6 @@ const styles = StyleSheet.create({
   bar: {
     width: "100%",
   },
-  describtion: {
-    flexDirection: "row",
-    paddingTop: 10,
-  },
-  describtionDetails: {
-    flexDirection: "row",
-    paddingTop: 15,
-    width: "100%",
-  },
   makeEvent: {
     flexDirection: "column",
     width: "30%",
@@ -201,23 +251,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "33%",
   },
-  point: {
-    flexDirection: "column",
-    width: "33%",
-  },
-
-  textPoint: {
-    textAlign: "left",
-    textAlign: "center",
-  },
-  numberText: {
+  fontBold: {
     fontWeight: "bold",
-    fontSize: 20,
-    textAlign: "center",
   },
-
-  textMakeEvent: {
-    textAlign: "right",
-  },
-  textWachEvent: {},
 });
