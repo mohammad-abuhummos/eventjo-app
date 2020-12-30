@@ -4,8 +4,6 @@ import {
   Text,
   View,
   Image,
-  Platform,
-  TouchableOpacity,
   SafeAreaView,
   ScrollView,
 } from "react-native";
@@ -79,7 +77,7 @@ export default function CompleteSignUp({ route, navigation }) {
           console.log("errr", e);
         });
     } else {
-      displayError("Invalid Information", User_info.errors().join(", "));
+      displayError("المعلومات خطأ", User_info.errors().join(", "));
     }
   };
 
@@ -88,10 +86,10 @@ export default function CompleteSignUp({ route, navigation }) {
   };
   const data = [
     {
-      label: "Female",
+      label: "انثى",
     },
     {
-      label: "Male",
+      label: "ذكر",
     },
   ];
 
@@ -107,10 +105,11 @@ export default function CompleteSignUp({ route, navigation }) {
                     name="ios-arrow-back"
                     size={25}
                     style={styles.backIcon}
+                    onPress={() => navigation.goBack()}
                   />
                 </View>
                 <View style={styles.headerText}>
-                  <Text style={styles.signupText}>SIGN UP </Text>
+                  <Text style={styles.signupText}>انشاء حساب </Text>
                 </View>
               </View>
             </GradientHeader>
@@ -140,13 +139,13 @@ export default function CompleteSignUp({ route, navigation }) {
               <View style={styles.InputWidth}>
                 <AppInput
                   onChangeText={(text) => setPhone(text)}
-                  placeholder="Phone Number"
+                  placeholder="رقم الهاتف"
                 />
               </View>
               <View style={styles.InputWidth}>
                 <AppInput
                   onChangeText={(text) => setAddress(text)}
-                  placeholder="ADDRESS"
+                  placeholder="العنوان"
                 />
               </View>
               <View style={styles.InputWidth}>
@@ -154,7 +153,7 @@ export default function CompleteSignUp({ route, navigation }) {
                   style={{ width: "100%" }}
                   date={dateOfBrith}
                   mode="date"
-                  placeholder="Select date"
+                  placeholder=" تاريخ الميلاد"
                   format="YYYY-MM-DD"
                   minDate="1990-01-01"
                   maxDate={currentDate()}
@@ -169,10 +168,12 @@ export default function CompleteSignUp({ route, navigation }) {
                       paddingLeft: 30,
                       borderRadius: 50,
                       borderWidth: 0,
-                      alignItems: "flex-start",
+                      alignItems: "flex-end",
+                      
                     },
                     placeholderText: {
                       color: "#a7a7a7",
+                      textAlign:"right"
                     },
                     // ... You can check the source to find the other keys.
                   }}
@@ -181,14 +182,14 @@ export default function CompleteSignUp({ route, navigation }) {
                   }}
                 />
               </View>
-              <View style={{ paddingHorizontal: 20, paddingTop: 35 }}>
-                <Text style={{ fontSize: 18 }}>Gender</Text>
+              <View style={{ paddingHorizontal: 20, paddingTop: 35 ,textAlign:"right" ,paddingLeft:230}}>
+                <Text style={{ fontSize: 18 }}>الجنس</Text>
                 <RadioButtonRN
                   data={data}
                   box={false}
                   initial={1}
                   circleSize={10}
-                  selectedBtn={(e) => setGender(e.label)}
+                  selectedBtn={(e) => setGender(e.label) }
                 />
               </View>
               <View style={styles.InputWidth}>
@@ -201,7 +202,7 @@ export default function CompleteSignUp({ route, navigation }) {
                     end: { x: 1, y: 0.5 },
                   }}
                   buttonStyle={{ padding: 13, borderRadius: 25 }}
-                  title="Sign Up"
+                  title="انشاء حساب"
                   type="clear"
                   onPress={() => SingUpPost()}
                 />

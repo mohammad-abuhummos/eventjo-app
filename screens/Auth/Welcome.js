@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import AppButton from "../../components/AppButton";
-import { Button } from "react-native-elements";
 
 export default function Welcome({ navigation }) {
   return (
@@ -24,34 +23,17 @@ export default function Welcome({ navigation }) {
           <AppButton
             Style={{ backgroundColor: "#fff", }}
             titleStyle={{ color: "#719CCE" }}
-            title="login"
+            title="تسجيل دخول"
             onPress={() => navigation.navigate('SingIn')}
           />
           <AppButton
             Style={{ backgroundColor: "#fff", marginTop: 20 }}
             titleStyle={{ color: "#719CCE" }}
-            title="SignUp"
+            title="انشاء حساب"
             onPress={() => navigation.navigate('SignUp')}
           />
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignContent: "center",
-          }}
-        >
-          <Text style={{ alignSelf: "center", color: "#fff" }}>
-            if do you want show 
-            </Text>
-          <Button
-            titleStyle={{ color: "#fff" }}
-            buttonStyle={{ paddingLeft: 5 }}
-            title="Event"
-            type="clear"
-            onPress={() => navigation.navigate('event')}
-          />
-        </View>
+       
       </LinearGradient>
     </View>
   );

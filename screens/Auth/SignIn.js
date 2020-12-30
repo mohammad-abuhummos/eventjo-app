@@ -8,6 +8,8 @@ import { Button } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../App";
 import i18n from 'i18n-js';
+import { displayError } from "../../models/helpers";
+
 
 export const setUserToken = async (token) => {
   try {
@@ -44,6 +46,8 @@ export default function SignIn({ navigation }) {
     } catch (err) {
       // Handle Error Here
       console.error(err);
+      if(resp.status === 401){
+      }
     }
   };
   const handleClick = () => {
@@ -79,11 +83,9 @@ export default function SignIn({ navigation }) {
             }}
           >
             <Text style={styles.nameProject}>
-            EVENT<Text style={styles.extensionNameProject}>TS</Text>JO
+              EVENT<Text style={styles.extensionNameProject}>TS</Text>JO
             </Text>
-            <Text>
-            {i18n.t('welcome')}
-            </Text>
+
             <View
               style={{
                 paddingHorizontal: 40,
@@ -93,7 +95,7 @@ export default function SignIn({ navigation }) {
               }}
             >
               <AppInput
-                placeholder= {i18n.t('welcome')}
+                placeholder="البريد الالكتروني"
                 onChangeText={(text) => setEmaile(text)}
               />
             </View>
@@ -106,7 +108,7 @@ export default function SignIn({ navigation }) {
             >
               <AppInput
                 secureTextEntry={true}
-                placeholder="PASSWORD"
+                placeholder="الرقم السري"
                 onChangeText={(text) => setPassword(text)}
               />
             </View>
@@ -120,7 +122,7 @@ export default function SignIn({ navigation }) {
               <AppButton
                 Style={{ backgroundColor: "#fff" }}
                 titleStyle={{ color: "#719CCE" }}
-                title="login"
+                title="تسجيل دخول"
                 onPress={handleClick}
               />
             </View>
@@ -131,16 +133,43 @@ export default function SignIn({ navigation }) {
                 alignContent: "center",
               }}
             >
-              <Text style={{ alignSelf: "center", color: "#fff" }}>
-                Don’t have an account ?
-              </Text>
               <Button
                 titleStyle={{ color: "#fff" }}
                 buttonStyle={{ paddingLeft: 5 }}
-                title="Sign Up"
+                title="انشاء حساب"
                 type="clear"
                 onPress={() => navigation.navigate("SignUp")}
               />
+              <Text style={{ alignSelf: "center", color: "#fff" }}>
+                ليس لديك حساب؟
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
+              >
+
+              </View>
+
+            </View>
+            <View style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignContent: "center",
+            }}>
+
+              <Button
+                titleStyle={{ color: "#fff" }}
+                buttonStyle={{ paddingLeft: 5 }}
+                title="اضغط هنا"
+                type="clear"
+                onPress={() => navigation.navigate('Event')}
+              />
+              <Text style={{ alignSelf: "center", color: "#fff" }}>
+                اذا اردت مشاهدت ورشات العمل ؟
+            </Text>
             </View>
           </View>
         </LinearGradient>
@@ -167,8 +196,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 50,
     fontWeight: "bold",
-
-    //
   },
   extensionNameProject: {
     color: "#5684A6",

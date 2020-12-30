@@ -116,7 +116,7 @@ export default function CreateEvent({navigation}) {
           console.log("errr", e);
         });
     } else {
-      displayError("Invalid Information", User_info.errors().join(", "));
+      displayError("خطأ معلومات", User_info.errors().join(", "));
     }
   };
 
@@ -131,10 +131,11 @@ export default function CreateEvent({navigation}) {
                   name="ios-arrow-back"
                   size={25}
                   style={styles.backIcon}
+                  onPress={() => navigation.goBack()}
                 />
               </View>
               <View style={styles.createEvent}>
-                <Text style={styles.createEventText}>Create Event </Text>
+                <Text style={styles.createEventText}>انشاء  ورشة عمل </Text>
               </View>
             </View>
           </GradientHeader>
@@ -178,7 +179,7 @@ export default function CreateEvent({navigation}) {
               </TouchableOpacity>
               <AppInput
                 onChangeText={(text) => setEvent_title(text)}
-                placeholder="Title"
+                placeholder="عنوان ورشة العمل"
                 style={{
                   borderRadius: 10,
                   backgroundColor: "#F5F5F5",
@@ -193,7 +194,7 @@ export default function CreateEvent({navigation}) {
                 onChangeText={(text) => setEvent_desc(text)}
                 multiline={true}
                 editable={true}
-                placeholder="About Event "
+                placeholder="تفاصيل ورشة العمل "
                 style={{
                   borderRadius: 10,
                   backgroundColor: "#F5F5F5",
@@ -208,7 +209,7 @@ export default function CreateEvent({navigation}) {
 
               <AppInput
                 onChangeText={(text) => setEvent_location_desc(text)}
-                placeholder="Add Location"
+                placeholder="اضافت مكان ورشة العمل"
                 style={{
                   borderRadius: 10,
                   backgroundColor: "#F5F5F5",
@@ -247,7 +248,7 @@ export default function CreateEvent({navigation}) {
                   style={{ width: "100%" }}
                   date={event_date}
                   mode="date"
-                  placeholder="Select date"
+                  placeholder="ادخل تاريخ ورشة العمل"
                   format="YYYY-MM-DD"
                   minDate="1990-01-01"
                   maxDate={currentDate()}
@@ -262,7 +263,7 @@ export default function CreateEvent({navigation}) {
                       paddingLeft: 10,
                       borderRadius: 10,
                       borderWidth: 0,
-                      alignItems: "flex-start",
+                      alignItems: "flex-end",
                       marginHorizontal: 15,
                       marginTop: 15,
                     },
@@ -287,7 +288,7 @@ export default function CreateEvent({navigation}) {
               >
                 <AppInput
                   onChangeText={(text) => setEvent_ticket(text)}
-                  placeholder="Avalibale Sets"
+                  placeholder="عدد المقاعد المتاحة"
                   keyboardType="number-pad"
                   style={{
                     borderRadius: 10,
@@ -301,7 +302,7 @@ export default function CreateEvent({navigation}) {
                 />
                 <AppInput
                   onChangeText={(text) => setEvent_ticket_vol(text)}
-                  placeholder="Volnters"
+                  placeholder="عدد المقاعد المتاحة لمتطوعين"
                   keyboardType="number-pad"
                   style={{
                     borderRadius: 10,
@@ -317,7 +318,7 @@ export default function CreateEvent({navigation}) {
 
               <AppButton
                 onPress={() => CreateEvent()}
-                title="Request Event"
+                title="انشاء ورشة عمل"
                 ViewComponent={LinearGradient}
                 linearGradientProps={{
                   colors: ["#3D7BF7", "#6AF1C5"],

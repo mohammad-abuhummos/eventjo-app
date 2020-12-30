@@ -1,4 +1,17 @@
  {
-      "welcome": "Hello",
-      "Username": "Username" 
+      "Username": "Username" ,
+      "Logout":"Logout",
+      "Home":"Home",
+      "CreateEvent":"Create Event",
+      "EventDetalis":"EventDetalis",
+      "SingIn":"SingIn",
+      "CompleteSignUp":"CompleteSignUp",
+      "SignUp":"SignUp",
+      "Welcome":"Welcome",
+      "Phone number must be 10 number":"Phone number must be 10 number",
+      "Invalid Date of birth":"Invalid Date of birth",
+      "Invalid Address":"Invalid Address",
+      "PASSWORD":"PASSWORD",
+      "Email":"Email"
+
 }

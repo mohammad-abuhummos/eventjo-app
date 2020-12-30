@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { Avatar, Colors } from "react-native-elements";
 import { Ionicons, Feather } from "@expo/vector-icons";
@@ -18,6 +18,7 @@ export default function Profile() {
               size={25}
               color="black"
               style={styles.backIcon}
+              onPress={() => navigation.goBack()}
             />
           </View>
 

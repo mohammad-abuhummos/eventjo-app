@@ -15,8 +15,6 @@ import { Button } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import GradientHeader from "../../components/GradientHeader";
 import { Ionicons } from "@expo/vector-icons";
-import { setUserToken } from "./SignIn";
-import Axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import userSignUpModel from "../../models/userSignUpModel";
 import { displayError } from "../../models/helpers";
@@ -39,8 +37,7 @@ export default function SignUp() {
     if (User_info.isValid()) {
       navigation.navigate("CompleteSignUp", {image, name, email, password });
     } else {
-      console.log("Email", Email);
-      displayError("Invalid Information", User_info.errors().join(", "));
+      displayError("المعلومات خطأ", User_info.errors().join(", "));
     }
   };
 
@@ -51,7 +48,7 @@ export default function SignUp() {
           status,
         } = await ImagePicker.requestCameraRollPermissionsAsync();
         if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
+          alert("نأسف نحتاج موافقة على صلاحيات الكاميرا");
         }
       }
     })();
@@ -82,10 +79,11 @@ export default function SignUp() {
                     name="ios-arrow-back"
                     size={25}
                     style={styles.backIcon}
+                    onPress={() => navigation.goBack()}
                   />
                 </View>
                 <View style={styles.headerText}>
-                  <Text style={styles.signupText}>SIGN UP </Text>
+                  <Text style={styles.signupText}>انشاء حساب </Text>
                 </View>
               </View>
 
@@ -107,25 +105,25 @@ export default function SignUp() {
             <View style={{ paddingTop: 35, width: "100%" }}>
               <AppInput
                 onChangeText={(text) => setName(text)}
-                placeholder="FULL NAME"
+                placeholder="الاسم"
               />
             </View>
             <View style={{ paddingTop: 35, width: "100%" }}>
               <AppInput
                 onChangeText={(text) => setEmail(text)}
-                placeholder="EMAIL ADDRESS"
+                placeholder="البريد الالكنروني"
               />
             </View>
             <View style={{ paddingTop: 35, width: "100%" }}>
               <AppInput
                 secureTextEntry={true}
                 onChangeText={(text) => setPassword(text)}
-                placeholder="PASSWORD"
+                placeholder="الرقم السري"
               />
             </View>
             <View style={{ paddingTop: 35, width: "100%" }}>
               <AppInput
-                placeholder="RE-TYPE PASSWORD"
+                placeholder="تاكيد الرقم السري"
                 secureTextEntry={true}
                 onChangeText={(text) => setRePassword(text)}
               />
@@ -144,7 +142,7 @@ export default function SignUp() {
                   borderRadius: 25,
                   marginBottom: 20,
                 }}
-                title="Sign Up"
+                title="انشاء حساب"
                 type="clear"
                 onPress={() => handelClick(name, email, password, Repassword)}
               />

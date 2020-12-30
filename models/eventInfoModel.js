@@ -22,12 +22,12 @@ export default class EventInfoModel {
   }
   errors() {
     let errors_arr = [];
-    if (!isPresent(this.event_title)) errors_arr.push("Event must have title");
+    if (!isPresent(this.event_title)) errors_arr.push("يجب ادخال عنوان");
     if (!isPresent(this.event_desc))
     if (!isPresentValid(this.event_location_desc))
-      errors_arr.push("Event must have description location");
-    if (!isPresent(this.event_date)) errors_arr.push("Event must have date");
-    if (!isPresent(this.event_ticket)) errors_arr.push("Event must have seats number");
+      errors_arr.push("يجب ادخال تفاصيل المكان");
+    if (!isPresent(this.event_date)) errors_arr.push("يجب ادخال التاريخ");
+    if (!isPresent(this.event_ticket)) errors_arr.push("يجب ادخال عدد الحضور");
     return errors_arr;
   }
 }

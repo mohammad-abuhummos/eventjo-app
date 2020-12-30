@@ -12,6 +12,7 @@ import {
 import SingIn, { removeUserToken } from "./screens/Auth/SignIn";
 import SignUp from "./screens/Auth/SignUp";
 import Home from "./screens/Home";
+import Event from "./screens/Event";
 import Welcome from "./screens/Auth/Welcome";
 import CreateEvent from "./screens/CreateEvent";
 import EventDetalis from "./screens/EventDetalis";
@@ -21,15 +22,14 @@ import CompleteSignUp from "./screens/Auth/CompleteSignUp";
 import * as Localization from 'expo-localization';
 import * as en from './locals/en-US.json';
 import * as ar from './locals/ar.json';
-import i18n from 'i18n-js';
-// Set the key-value pairs for the different languages you want to support.
-i18n.translations = {
-  en: ar,
-  ja: en,
-};
-// Set the locale once at the beginning of your app.
-i18n.locale = "en";
-console.log("Localization.locale",Localization.locale)
+ // Set the key-value pairs for the different languages you want to support.
+//  i18n.translations = {
+//   en: en,
+//   ar: ar,
+// };
+// // Set the locale once at the beginning of your app.
+// i18n.locale = "ar";
+// console.log("Localization.locale",Localization.locale)
 export const AuthContext = React.createContext();
 
 export default function App() {
@@ -69,14 +69,14 @@ export default function App() {
           </View>
 
           <DrawerItemList {...props} />
-          <DrawerItem label=" Logout" onPress={() => handleClickOut()} />
+          <DrawerItem label='تسجيل خروج'onPress={() => handleClickOut()} />
         </View>
       );
     } else {
       return (
         <View style={[styles.container, styles.horizontal]}>
           <DrawerItemList {...props} />
-          <DrawerItem label=" Logout" onPress={() => handleClickOut()} />
+          <DrawerItem label="'تسجيل خروج" onPress={() => handleClickOut()} />
         </View>
       );
     }
@@ -87,23 +87,22 @@ export default function App() {
     removeUserToken();
     setCurrentUserToken(null);
     setisLoading(false);
-    console.log("Out");
   };
 
   function AppDrawer() {
     return (
       <Drawer.Navigator
-        initialRouteName="Home"
+        initialRouteName="Event"
         drawerContent={(props) => <CustomDrawerContentComponent {...props} />}
       >
         <Drawer.Screen
           options={{ headerShown: false }}
-          name="Home"
+          name="الصفحة الرئيسية"
           component={Home}
         />
         <Drawer.Screen
           options={{ headerShown: false }}
-          name="Create Event"
+          name='انشاء ورشة عمل'
           component={CreateEvent}
         />
       </Drawer.Navigator>
@@ -147,22 +146,22 @@ export default function App() {
               <>
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="Home"
+                  name='الصفحة الرئيسية'
                   component={AppDrawer}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="EventDetalis"
+                  name='تفاصيل ورشة العمل'
                   component={EventDetalis}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="Welcome"
+                  name='مرحبا'
                   component={Welcome}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="CreateEvent"
+                  name='انشاء ورشة عمل'
                   component={CreateEvent}
                 />
               </>
@@ -170,19 +169,25 @@ export default function App() {
               <>
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="SingIn"
+                  name='تسجيل دخول'
                   component={SingIn}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="CompleteSignUp"
+                  name='1 انشاء حساب'
                   component={CompleteSignUp}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="SignUp"
+                  name='انشاء حساب'
                   component={SignUp}
                 />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name='ورشة العمل'
+                  component={Event}
+                />
+               
               </>
             )}
           </Stack.Navigator>

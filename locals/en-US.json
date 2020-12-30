@@ -1,5 +1,15 @@
- { "welcome": "こんにちは",
-    "Username": "اسم المستخم",
+ { 
+    "Username": "اسم المستخدم" ,
+    "Logout":"تسجيل خروج",
+    "Home":"الصفحة الرئيسية",
+    "CreateEvent":" انشاء ورشة عمل ",
+    "EventDetalis":"تفاصيل ورش العمل",
+    "SingIn":"تسجيل دخول",
+    "CompleteSignUp":"تكملة انشاء الحساب",
+    "SignUp":"انشاء حساب",
+    "Welcome":"ترحيب",
+    "Phone number must be 10 number":"يجب ان يكون 10 ارقام",
+    "Invalid Date of birth":"تاريخ الميلاد خطأ",
+    "Invalid Address":"العنوان خطأ"
 
-    "hi": " mohas nkascj /n" 
 }

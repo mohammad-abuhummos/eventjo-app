@@ -14,12 +14,12 @@ export default class userSignUpModel  {
     let errors_arr = [];
     if (!isName(this.Name))
     errors_arr.push(
-      'Full Name must be greater than 3 character and less than 12 character',
+      'يجب ادخال الاسم اقل شيء 3 احرف و اكثر اشي 12 حرف',
     );
     console.log("!isValidEmail(this.email)",this.email)
     if (!isValidEmail(this.email)) errors_arr.push('Invalid email');
     if (!isMatching(this.password, this.password_confirmation))
-      errors_arr.push('Password is not valid');
+      errors_arr.push('الرقم السري خطأ');
     return errors_arr;
   }
 }

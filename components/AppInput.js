@@ -5,7 +5,7 @@ export default function AppInput(props) {
   const { placeholder, style,keyboardType } = props;
   return (
     <View style={styles.container}>
-      <TextInput placeholder={placeholder} style={[styles.input, style]} keyboardType={keyboardType} {...props} />
+      <TextInput placeholder={placeholder} style={[styles.input, {textAlign:"right"}]} keyboardType={keyboardType} {...props} />
     </View>
   );
 }
